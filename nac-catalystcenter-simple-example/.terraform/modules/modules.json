@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"catalyst_center","Source":"registry.terraform.io/netascode/nac-catalystcenter/catalystcenter","Version":"0.2.0","Dir":".terraform/modules/catalyst_center"}]}
