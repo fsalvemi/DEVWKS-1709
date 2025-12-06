@@ -97,6 +97,8 @@ catalyst_center:
 - Buildings include geographic coordinates and addresses
 - IP pool reservations are referenced by name
 
+**Full Documentation:** [Catalyst Center Sites Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/sites/area/)
+
 #### **IP Pools** (`data/ip_pools.nac.yaml`)
 Defines global IP pools and site-specific reservations.
 
