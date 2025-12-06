@@ -128,6 +128,8 @@ catalyst_center:
 - DHCP and DNS servers are defined at the pool level
 - Reservations inherit settings from their parent pool
 
+**Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
+
 ### 3. Deploy
 
 ```bash
