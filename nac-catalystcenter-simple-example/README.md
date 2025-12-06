@@ -4,11 +4,9 @@ This folder demonstrates the **Network-as-Code (NAC) Module** approach to config
 
 ## Lab Access
 
-- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
-- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
-  - IP: 198.18.133.20
-  - Username: admin
-  - Password: C1sco12345
+If not already done, follow the [instructions for lab access](../README.md#lab-access) 
+
+## Clone Repository
 
 - Close Ubuntu WSL and VS Code before starting this lab! This prevents creating nested repository folders within your existing lab directory.
 - Launch a new session of Ubuntu WSL machine.
