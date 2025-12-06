@@ -38,6 +38,20 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
     └── native_api_implementation.py       # Python REST API client
 ```
 
+## Lab Access
+
+- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
+- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
+  - IP: 198.18.133.20
+  - Username: admin
+  - Password: C1sco12345
+
+## Suggested Learning Path
+
+- Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
+- Optionally try to achieve the same results using the Terraform Native API approach and compare the complexity of the code required to achieve the same result
+- Optionally Examine the complexity of the native API example to achieve the same results
+
 ## 🚀 What's Deployed
 
 Each approach deploys **35 total resources** to Catalyst Center:
