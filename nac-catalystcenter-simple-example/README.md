@@ -2,6 +2,22 @@
 
 This folder demonstrates the **Network-as-Code (NAC) Module** approach to configuring Cisco Catalyst Center using YAML-based declarative configuration.
 
+## Lab Access
+
+- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
+- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
+  - IP: 198.18.133.20
+  - Username: admin
+  - Password: C1sco12345
+
+- Close Ubuntu WSL and VS Code before starting this lab! This prevents creating nested repository folders within your existing lab directory.
+- Launch a new session of Ubuntu WSL machine.
+- In the terminal window, type the following command to clone the repository
+  ```bash
+  git clone https://github.com/netascode/nac-catalystcenter-simple-example.git
+  ```
+
+
 ## 🎯 What This Example Does
 
 Deploys a complete network infrastructure to Catalyst Center:
