@@ -49,8 +49,8 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
 ## Suggested Learning Path
 
 - Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
-- Optionally try to achieve the same results using the Terraform Native API approach and compare the complexity of the code required to achieve the same result
-- Optionally Examine the complexity of the native API example to achieve the same results
+- Optionally try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+- Optionally Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
 
 ## 🚀 What's Deployed
 
