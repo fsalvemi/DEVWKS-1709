@@ -97,6 +97,13 @@ catalyst_center:
 - Buildings include geographic coordinates and addresses
 - IP pool reservations are referenced by name
 
+**Data Model Overview:**
+The `sites` class supports areas, buildings, and floors with:
+- **Credential Management**: CLI, SNMPv2/v3, HTTPS credentials at any hierarchy level
+- **Network Settings**: AAA servers, network configuration, and telemetry settings
+- **IP Pool Reservations**: Reference pools by name for automatic site-specific allocation
+- **Hierarchical Structure**: Use slash-separated paths (e.g., `Global/Americas/USA`)
+
 **Full Documentation:** [Catalyst Center Sites Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/sites/area/)
 
 #### **IP Pools** (`data/ip_pools.nac.yaml`)
