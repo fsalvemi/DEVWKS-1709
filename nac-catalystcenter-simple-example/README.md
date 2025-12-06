@@ -66,6 +66,16 @@ terraform apply  # Deploy to Catalyst Center
 
 **Expected Result**: ✅ Success on first apply - all 35 resources created
 
+### 3. Clean Up
+
+To remove all deployed resources from Catalyst Center:
+
+```bash
+terraform destroy  # Remove all 35 resources
+```
+
+**Note**: Terraform will show you a plan of what will be destroyed and ask for confirmation before proceeding.
+
 ## 📝 YAML Configuration Examples
 
 ### Site Hierarchy (`data/sites.nac.yaml`)
