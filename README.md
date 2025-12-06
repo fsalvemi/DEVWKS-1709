@@ -4,7 +4,7 @@ This repository demonstrates three different approaches to configuring Cisco Cat
 
 ## 🎯 Purpose
 
-This is a teaching/demonstration repository for **DEVWKS-1709 Lab**, showcasing the dramatic difference in complexity between:
+This is a teaching/demonstration repository for **DEVWKS-1709 Lab**, showcasing the difference in complexity between:
 1. **NAC Module (YAML-based)** - Simplified, declarative configuration
 2. **Native Terraform (HCL)** - Direct provider resource usage
 3. **Native API (Python)** - Direct REST API implementation
