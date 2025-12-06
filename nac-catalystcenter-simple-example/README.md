@@ -124,6 +124,7 @@ catalyst_center:
 
 ## 🔗 Resources
 
+- **Original Example**: [nac-catalystcenter-simple-example](https://github.com/netascode/nac-catalystcenter-simple-example/)
 - **NAC Module**: [terraform-catalystcenter-nac-catalystcenter](https://registry.terraform.io/modules/netascode/nac-catalystcenter/catalystcenter/latest)
 - **Module Documentation**: [GitHub Repository](https://github.com/netascode/terraform-catalystcenter-nac-catalystcenter)
 - **Catalyst Center Provider**: [CiscoDevNet Provider](https://registry.terraform.io/providers/CiscoDevNet/catalystcenter/latest)
