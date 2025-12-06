@@ -56,7 +56,77 @@ module "catalyst_center" {
 }
 ```
 
-### 2. Deploy
+### 2. Inspect YAML Files
+
+The NAC module uses two YAML files to define the network infrastructure in a hierarchical, human-readable format.
+
+#### **Site Hierarchy** (`data/sites.nac.yaml`)
+Defines the organizational structure: areas, buildings, and floors.
+
+```yaml
+---
+catalyst_center:
+  sites:
+    areas:
+      - name: United States
+        parent_name: Global
+      - name: Golden Hills Campus
+        parent_name: Global/United States
+    
+    buildings:
+      - name: Sunset Tower
+        latitude: 34.099
+        longitude: -118.366
+        address: 8358 Sunset Blvd, Los Angeles, CA 90069
+        country: United States
+        parent_name: Global/United States/Golden Hills Campus
+        ip_pools_reservations:
+          - ST_CORP
+          - ST_TECH
+          - ST_GUEST
+          - ST_BYOD
+    
+    floors:
+      - name: Floor 1
+        parent_name: Global/United States/Golden Hills Campus/Sunset Tower
+        floor_number: 1
+```
+
+**Key Points:**
+- `parent_name` creates the hierarchy using slash-separated paths
+- Buildings include geographic coordinates and addresses
+- IP pool reservations are referenced by name
+
+#### **IP Pools** (`data/ip_pools.nac.yaml`)
+Defines global IP pools and site-specific reservations.
+
+```yaml
+---
+catalyst_center:
+  network_settings:
+    ip_pools:
+      - name: US_CORP
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.201.0.0/16
+        dhcp_servers:
+          - 10.201.0.2
+        dns_servers:
+          - 10.201.0.2
+        ip_pools_reservations:
+          - name: ST_CORP
+            prefix_length: 24
+            subnet: 10.201.2.0
+          - name: DOT_CORP
+            prefix_length: 24
+            subnet: 10.201.1.0
+```
+
+**Key Points:**
+- Each global pool contains multiple site-specific reservations
+- DHCP and DNS servers are defined at the pool level
+- Reservations inherit settings from their parent pool
+
+### 3. Deploy
 
 ```bash
 terraform init
