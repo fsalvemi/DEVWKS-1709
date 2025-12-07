@@ -298,6 +298,11 @@ catalyst_center:
 
 **After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
 
+Verify your changes:
+```bash
+diff data/sites.nac.yaml reference/sites.nac.yaml
+```
+
 **What We're Adding**:
 - **3 Area Levels**: Europe → Italy → Rome hierarchy
 - **1 Building**: Rome Office with coordinates and address
@@ -397,6 +402,12 @@ ip_pools_reservations:
 **After completing all IP pool modifications**, verify your files against the reference:
 - `data/ip_pools.nac.yaml` should match: [`reference/ip_pools.nac.yaml`](reference/ip_pools.nac.yaml)
 - `data/sites.nac.yaml` should match: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
+
+Verify your changes:
+```bash
+diff data/ip_pools.nac.yaml reference/ip_pools.nac.yaml
+diff data/sites.nac.yaml reference/sites.nac.yaml
+```
 
 **What We're Adding**:
 - **1 Global IP Pool**: EU_CORP (10.205.0.0/16) for all European sites
