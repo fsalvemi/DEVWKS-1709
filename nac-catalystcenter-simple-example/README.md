@@ -403,9 +403,13 @@ ip_pools_reservations:
 - `data/ip_pools.nac.yaml` should match: [`reference/ip_pools.nac.yaml`](reference/ip_pools.nac.yaml)
 - `data/sites.nac.yaml` should match: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
 
-Verify your changes:
+Verify your changes to `ip_pools.nac.yaml`:
 ```bash
 diff -c data/ip_pools.nac.yaml reference/ip_pools.nac.yaml
+```
+
+Verify your changes to `sites.nac.yaml`:
+```bash
 diff -c data/sites.nac.yaml reference/sites.nac.yaml
 ```
 
