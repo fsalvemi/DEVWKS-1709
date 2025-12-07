@@ -222,29 +222,37 @@ terraform apply  # Deploy to Catalyst Center
 
 ### 5. Adding a New Site
 
-Now let's expand to Europe by adding a Rome office. Edit `data/sites.nac.yaml` to add the hierarchical structure:
+Now let's expand to Europe by adding a Rome office. Edit `data/sites.nac.yaml` to add the hierarchical structure.
+
+Add these entries under the existing structure (`catalyst_center` → `sites` → `areas`):
 
 ```yaml
-areas:
-  - name: Europe
-    parent_name: Global
-  - name: Italy
-    parent_name: Global/Europe
-  - name: Rome
-    parent_name: Global/Europe/Italy
-
-buildings:
-  - name: Rome Office
-    latitude: 41.832002
-    longitude: 12.491654
-    address: Via Del Serafico 200, 00142 Roma Rome, Italy
-    country: Italy
-    parent_name: Global/Europe/Italy/Rome
-
-floors:
-  - name: FLOOR_1
-    floor_number: 1
-    parent_name: Global/Europe/Italy/Rome/Rome Office
+---
+catalyst_center:
+  sites:
+    areas:
+      # Existing US areas...
+      - name: Europe
+        parent_name: Global
+      - name: Italy
+        parent_name: Global/Europe
+      - name: Rome
+        parent_name: Global/Europe/Italy
+    
+    buildings:
+      # Existing US buildings...
+      - name: Rome Office
+        latitude: 41.832002
+        longitude: 12.491654
+        address: Via Del Serafico 200, 00142 Roma Rome, Italy
+        country: Italy
+        parent_name: Global/Europe/Italy/Rome
+    
+    floors:
+      # Existing US floors...
+      - name: FLOOR_1
+        floor_number: 1
+        parent_name: Global/Europe/Italy/Rome/Rome Office
 ```
 
 **What We're Adding**:
