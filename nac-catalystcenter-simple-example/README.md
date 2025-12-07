@@ -104,7 +104,7 @@ This modular approach lets you split large configurations (e.g., separate files 
 
 The NAC module uses two YAML files to define the network infrastructure in a hierarchical, human-readable format.
 
-**About YAML:**
+#### 3.1 About YAML
 YAML (YAML Ain't Markup Language) is a human-readable data serialization format commonly used for configuration files. Key syntax rules:
 - **Indentation Matters**: Use spaces (not tabs) - typically 2 spaces per level
 - **Key-Value Pairs**: Format is `key: value` with a space after the colon
@@ -113,7 +113,7 @@ YAML (YAML Ain't Markup Language) is a human-readable data serialization format 
 - **Comments**: Start with `#` and continue to end of line
 - **Case Sensitive**: `name` and `Name` are different keys
 
-**Network-as-Code YAML Files:**
+### 3.2 Network-as-Code YAML Files
 Files with the `.nac.yaml` suffix leverage the **Network-as-Code Data Model JSON Schema** for validation and auto-completion. This provides:
 - **Error Checking**: Validates configuration against the data model before deployment
 - **IntelliSense**: IDE support for available options and attributes for each object
@@ -122,7 +122,8 @@ Files with the `.nac.yaml` suffix leverage the **Network-as-Code Data Model JSON
 
 This schema-based approach catches configuration errors early and guides you with available options as you write your YAML files.
 
-#### **Site Hierarchy** (`data/sites.nac.yaml`)
+### 3.3 Site Hierarchy (`data/sites.nac.yaml`)
+
 Defines the organizational structure: areas, buildings, and floors.
 
 ```yaml
@@ -168,7 +169,8 @@ The `sites` class supports areas, buildings, and floors with:
 
 **Full Documentation:** [Catalyst Center Sites Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/sites/area/)
 
-#### **IP Pools** (`data/ip_pools.nac.yaml`)
+### 3.4 IP Pools (`data/ip_pools.nac.yaml`)
+
 Defines global IP pools and site-specific reservations.
 
 ```yaml
@@ -199,7 +201,7 @@ catalyst_center:
 
 **Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
 
-### 3. Deploy
+### 4. Deploy
 
 ```bash
 terraform init
@@ -209,7 +211,7 @@ terraform apply  # Deploy to Catalyst Center
 
 **Expected Result**: ✅ Success on first apply - all 35 resources created
 
-### 3. Clean Up
+### 5. Clean Up
 
 To remove all deployed resources from Catalyst Center:
 
@@ -219,56 +221,6 @@ terraform destroy  # Remove all 35 resources
 
 **Note**: Terraform will show you a plan of what will be destroyed and ask for confirmation before proceeding.
 
-## 📝 YAML Configuration Examples
-
-### Site Hierarchy (`data/sites.nac.yaml`)
-
-```yaml
----
-catalyst_center:
-  sites:
-    areas:
-      - name: United States
-        parent_name: Global
-    
-    buildings:
-      - name: Sunset Tower
-        latitude: 34.099
-        longitude: -118.366
-        address: 8358 Sunset Blvd, Los Angeles, CA 90069
-        country: United States
-        parent_name: Global/United States/Golden Hills Campus
-        ip_pools_reservations:
-          - ST_CORP
-          - ST_TECH
-          - ST_GUEST
-          - ST_BYOD
-    
-    floors:
-      - name: Floor 1
-        parent_name: Global/United States/Golden Hills Campus/Sunset Tower
-        floor_number: 1
-```
-
-### IP Pools (`data/ip_pools.nac.yaml`)
-
-```yaml
----
-catalyst_center:
-  ip_pools:
-    - name: US_CORP
-      ip_address_space: IPv4
-      ip_pool_cidr: 10.201.0.0/16
-      dhcp_servers:
-        - 10.201.0.2
-      dns_servers:
-        - 10.201.0.2
-      ip_pools_reservations:
-        - name: ST_CORP
-          site: Global/United States/Golden Hills Campus/Sunset Tower
-          prefix_length: 24
-          subnet: 10.201.2.0
-```
 
 ## ✅ Key Benefits
 
