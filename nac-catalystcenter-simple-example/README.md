@@ -278,38 +278,49 @@ terraform apply  # Deploy new site
 
 ### 6. Adding IP Pools for New Site
 
-Now add IP addressing for the Rome office. This requires changes to both YAML files:
+Now add IP addressing for the Rome office. This requires changes to both YAML files.
 
 **Step 1: Add Global Pool in `data/ip_pools.nac.yaml`**
 
+Add this new pool to the existing list under `catalyst_center` → `network_settings` → `ip_pools`:
+
 ```yaml
-- name: EU_CORP
-  ip_address_space: IPv4
-  ip_pool_cidr: 10.205.0.0/16
-  dns_servers:
-    - 10.205.0.1
-  dhcp_servers:
-    - 10.205.0.1
-  ip_pools_reservations:
-    - name: ROM_CORP
-      prefix_length: 24
-      subnet: 10.205.1.0
+---
+catalyst_center:
+  network_settings:
+    ip_pools:
+      # Existing US pools (US_CORP, US_TECH, US_GUEST, US_BYOD)...
+      - name: EU_CORP
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.205.0.0/16
+        dns_servers:
+          - 10.205.0.1
+        dhcp_servers:
+          - 10.205.0.1
+        ip_pools_reservations:
+          - name: ROM_CORP
+            prefix_length: 24
+            subnet: 10.205.1.0
 ```
 
 **Step 2: Reference Reservation in `data/sites.nac.yaml`**
 
-Update the Rome Office building to reference the IP pool:
+Update the Rome Office building entry to add the `ip_pools_reservations` field:
 
 ```yaml
-buildings:
-  - name: Rome Office
-    latitude: 41.832002
-    longitude: 12.491654
-    address: Via Del Serafico 200, 00142 Roma Rome, Italy
-    country: Italy
-    parent_name: Global/Europe/Italy/Rome
-    ip_pools_reservations:
-      - ROM_CORP
+---
+catalyst_center:
+  sites:
+    buildings:
+      # Existing US buildings...
+      - name: Rome Office
+        latitude: 41.832002
+        longitude: 12.491654
+        address: Via Del Serafico 200, 00142 Roma Rome, Italy
+        country: Italy
+        parent_name: Global/Europe/Italy/Rome
+        ip_pools_reservations:
+          - ROM_CORP
 ```
 
 **What We're Adding**:
