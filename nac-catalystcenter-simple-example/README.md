@@ -124,7 +124,7 @@ This schema-based approach catches configuration errors early and guides you wit
 
 ### 3.3 Site Hierarchy (`data/sites.nac.yaml`)
 
-Defines the organizational structure: areas, buildings, and floors.
+Defines the organizational structure: areas, buildings, and floors. The base configuration includes US-based sites:
 
 ```yaml
 ---
@@ -154,45 +154,6 @@ catalyst_center:
         parent_name: Global/United States/Golden Hills Campus/Sunset Tower
         floor_number: 1
 ```
-#### 3.3.1 Adding a New Site
-
-To add a new site in Rome, Italy, we created a hierarchical structure by adding three area levels (Europe → Italy → Rome) and then a building with a floor:
-
-```yaml
-areas:
-  - name: Europe
-    parent_name: Global
-  - name: Italy
-    parent_name: Global/Europe
-  - name: Rome
-    parent_name: Global/Europe/Italy
-
-buildings:
-  - name: Rome Office
-    latitude: 41.832002
-    longitude: 12.491654
-    address: Via Del Serafico 200, 00142 Roma Rome, Italy
-    country: Italy
-    parent_name: Global/Europe/Italy/Rome
-
-floors:
-  - name: FLOOR_1
-    floor_number: 1
-    parent_name: Global/Europe/Italy/Rome/Rome Office
-```
-
-**What We Added**:
-- **3 Area Levels**: Created a geographic hierarchy from continent to city
-- **1 Building**: Rome Office with exact coordinates and address
-- **1 Floor**: Ground floor (FLOOR_1)
-- **Total**: 5 new resources with just 18 lines of YAML
-
-**Key Points**:
-- Each area references its parent using slash-separated paths
-- The building references the complete hierarchy path
-- No IP pool reservations added yet (see section 3.4.1)
-- No dependencies to manage - NAC module handles ordering automatically
-
 
 **Key Points:**
 - `parent_name` creates the hierarchy using slash-separated paths
@@ -210,7 +171,7 @@ The `sites` class supports areas, buildings, and floors with:
 
 ### 3.4 IP Pools (`data/ip_pools.nac.yaml`)
 
-Defines global IP pools and site-specific reservations.
+Defines global IP pools and site-specific reservations for US locations:
 
 ```yaml
 ---
@@ -240,11 +201,78 @@ catalyst_center:
 
 **Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
 
-### 3.4.1 Adding New IP Pools
+### 4. Deploy Base Configuration
 
-To support the Rome Office, we added a new European corporate IP pool and reserved a subnet for the Rome building. This required changes to both YAML files:
+Deploy the initial US-based network infrastructure:
 
-**Step 1: Create Global IP Pool in `ip_pools.nac.yaml`**
+```bash
+terraform init
+terraform plan   # Review changes - should show 35 resources to create
+terraform apply  # Deploy to Catalyst Center
+```
+
+**Expected Result**: ✅ Success on first apply - all 35 resources created
+- 5 Areas (United States + 4 campus/branch areas)
+- 4 Buildings (Sunset Tower, Windy City Plaza, Art Deco Mansion, Desert Oasis Tower)
+- 6 Floors across the buildings
+- 4 Global IP Pools (US_CORP, US_TECH, US_GUEST, US_BYOD)
+- 16 IP Pool Reservations (4 per building)
+
+## 🔄 Making Changes
+
+### 5. Adding a New Site
+
+Now let's expand to Europe by adding a Rome office. Edit `data/sites.nac.yaml` to add the hierarchical structure:
+
+```yaml
+areas:
+  - name: Europe
+    parent_name: Global
+  - name: Italy
+    parent_name: Global/Europe
+  - name: Rome
+    parent_name: Global/Europe/Italy
+
+buildings:
+  - name: Rome Office
+    latitude: 41.832002
+    longitude: 12.491654
+    address: Via Del Serafico 200, 00142 Roma Rome, Italy
+    country: Italy
+    parent_name: Global/Europe/Italy/Rome
+
+floors:
+  - name: FLOOR_1
+    floor_number: 1
+    parent_name: Global/Europe/Italy/Rome/Rome Office
+```
+
+**What We're Adding**:
+- **3 Area Levels**: Europe → Italy → Rome hierarchy
+- **1 Building**: Rome Office with coordinates and address
+- **1 Floor**: Ground floor
+- **Total**: 5 new resources with just 18 lines of YAML
+
+**Key Points**:
+- Each area references its parent using slash-separated paths
+- The building references the complete hierarchy path
+- No IP pool reservation yet - we'll add that in the next step
+- No dependencies to manage - NAC module handles ordering automatically
+
+**Deploy the Site Addition**:
+
+```bash
+terraform plan   # Review changes - should show 5 new resources
+terraform apply  # Deploy new site
+```
+
+**Expected Result**: ✅ 5 new resources added (3 areas, 1 building, 1 floor)
+
+### 6. Adding IP Pools for New Site
+
+Now add IP addressing for the Rome office. This requires changes to both YAML files:
+
+**Step 1: Add Global Pool in `data/ip_pools.nac.yaml`**
 
 ```yaml
 - name: EU_CORP
@@ -260,7 +288,9 @@ To support the Rome Office, we added a new European corporate IP pool and reserv
       subnet: 10.205.1.0
 ```
 
-**Step 2: Reference Reservation in `sites.nac.yaml`**
+**Step 2: Reference Reservation in `data/sites.nac.yaml`**
+
+Update the Rome Office building to reference the IP pool:
 
 ```yaml
 buildings:
@@ -274,32 +304,31 @@ buildings:
       - ROM_CORP
 ```
 
-**What We Added**:
+**What We're Adding**:
 - **1 Global IP Pool**: EU_CORP (10.205.0.0/16) for all European sites
 - **1 IP Pool Reservation**: ROM_CORP (10.205.1.0/24) carved from the global pool
-- **1 Building Reference**: Rome Office references ROM_CORP reservation
+- **Total**: 2 new resources
 
 **Key Points**:
-- The global pool (EU_CORP) can support multiple European sites with /24 subnets
-- The reservation (ROM_CORP) is defined once in `ip_pools.nac.yaml`
-- The building simply references the reservation name - no IP addressing details needed in sites file
+- The global pool can support multiple European sites with /24 subnets
+- The reservation is defined once in `ip_pools.nac.yaml`
+- The building simply references the reservation by name
 - DHCP and DNS settings are inherited from the parent global pool
-- NAC module automatically creates the pool before the reservation before the site association
+- NAC module automatically creates pool → reservation → site association in the correct order
 
-**Total New Resources**: 2 (global pool + reservation)
-**Lines Added**: 11 lines in `ip_pools.nac.yaml`, 1 line in `sites.nac.yaml`
-
-### 4. Deploy
+**Deploy the IP Pool Addition**:
 
 ```bash
-terraform init
-terraform plan   # Review changes
-terraform apply  # Deploy to Catalyst Center
+terraform plan   # Review changes - should show 2 new resources
+terraform apply  # Deploy IP pools
 ```
 
-**Expected Result**: ✅ Success on first apply - all 35 resources created
+**Expected Result**: ✅ 2 new resources added (1 global pool, 1 reservation)
 
-### 5. Clean Up
+**Total New Resources**: 7 (5 site resources + 2 IP pool resources)
+**Total Lines Added**: ~30 lines across two YAML files
+
+### 7. Clean Up
 
 To remove all deployed resources from Catalyst Center:
 
