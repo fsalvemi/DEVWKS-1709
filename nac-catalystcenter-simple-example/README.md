@@ -41,6 +41,12 @@ nac-catalystcenter-simple-example/
 
 ### 1. Update Configuration
 
+The `main.tf` file is the entry point for your Terraform deployment. It defines:
+- **Provider Configuration**: Which Terraform provider to use (Catalyst Center)
+- **Authentication**: How to connect to your Catalyst Center instance (URL, credentials)
+- **NAC Module**: References the Network-as-Code module for simplified configuration
+- **YAML Location**: Specifies where your configuration files are located (`data/` directory)
+
 Edit `main.tf` to point to your Catalyst Center:
 
 ```hcl
