@@ -82,3 +82,14 @@ catalyst_center:
           - name: ADM_BYOD
             prefix_length: 24
             subnet: 10.204.4.0
+      - name: EU_CORP
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.205.0.0/16
+        dns_servers:
+          - 10.205.0.1
+        dhcp_servers:
+          - 10.205.0.1
+        ip_pools_reservations:
+          - name: ROM_CORP
+            prefix_length: 24
+            subnet: 10.205.1.0
