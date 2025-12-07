@@ -207,8 +207,16 @@ Deploy the initial US-based network infrastructure:
 
 ```bash
 terraform init
-terraform plan   # Review changes - should show 35 resources to create
-terraform apply  # Deploy to Catalyst Center
+```
+
+Review the changes:
+```bash
+terraform plan
+```
+
+Deploy to Catalyst Center:
+```bash
+terraform apply
 ```
 
 **Expected Result**: ✅ Success on first apply - all 35 resources created
@@ -317,9 +325,14 @@ diff -c data/sites.nac.yaml reference/sites.nac.yaml
 
 **Deploy the Site Addition**:
 
+Review the changes:
 ```bash
-terraform plan   # Review changes - should show 5 new resources
-terraform apply  # Deploy new site
+terraform plan
+```
+
+Deploy new site:
+```bash
+terraform apply
 ```
 
 **Expected Result**: ✅ 5 new resources added (3 areas, 1 building, 1 floor)
@@ -427,9 +440,14 @@ diff -c data/sites.nac.yaml reference/sites.nac.yaml
 
 **Deploy the IP Pool Addition**:
 
+Review the changes:
 ```bash
-terraform plan   # Review changes - should show 2 new resources
-terraform apply  # Deploy IP pools
+terraform plan
+```
+
+Deploy IP pools:
+```bash
+terraform apply
 ```
 
 **Expected Result**: ✅ 2 new resources added (1 global pool, 1 reservation)
