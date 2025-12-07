@@ -296,11 +296,11 @@ catalyst_center:
   parent_name: Global/Europe/Italy/Rome/Rome Office
 ```
 
-**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
+**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference/sites.nac.yaml`](reference/sites.nac.yaml) with the exception of the ip_pools_reservations that we will add in the next step
 
 Verify your changes:
 ```bash
-diff data/sites.nac.yaml reference/sites.nac.yaml
+diff -c data/sites.nac.yaml reference/sites.nac.yaml
 ```
 
 **What We're Adding**:
@@ -405,8 +405,8 @@ ip_pools_reservations:
 
 Verify your changes:
 ```bash
-diff data/ip_pools.nac.yaml reference/ip_pools.nac.yaml
-diff data/sites.nac.yaml reference/sites.nac.yaml
+diff -c data/ip_pools.nac.yaml reference/ip_pools.nac.yaml
+diff -c data/sites.nac.yaml reference/sites.nac.yaml
 ```
 
 **What We're Adding**:
