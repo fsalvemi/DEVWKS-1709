@@ -240,6 +240,55 @@ catalyst_center:
 
 **Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
 
+### 3.4.1 Adding New IP Pools
+
+To support the Rome Office, we added a new European corporate IP pool and reserved a subnet for the Rome building. This required changes to both YAML files:
+
+**Step 1: Create Global IP Pool in `ip_pools.nac.yaml`**
+
+```yaml
+- name: EU_CORP
+  ip_address_space: IPv4
+  ip_pool_cidr: 10.205.0.0/16
+  dns_servers:
+    - 10.205.0.1
+  dhcp_servers:
+    - 10.205.0.1
+  ip_pools_reservations:
+    - name: ROM_CORP
+      prefix_length: 24
+      subnet: 10.205.1.0
+```
+
+**Step 2: Reference Reservation in `sites.nac.yaml`**
+
+```yaml
+buildings:
+  - name: Rome Office
+    latitude: 41.832002
+    longitude: 12.491654
+    address: Via Del Serafico 200, 00142 Roma Rome, Italy
+    country: Italy
+    parent_name: Global/Europe/Italy/Rome
+    ip_pools_reservations:
+      - ROM_CORP
+```
+
+**What We Added**:
+- **1 Global IP Pool**: EU_CORP (10.205.0.0/16) for all European sites
+- **1 IP Pool Reservation**: ROM_CORP (10.205.1.0/24) carved from the global pool
+- **1 Building Reference**: Rome Office references ROM_CORP reservation
+
+**Key Points**:
+- The global pool (EU_CORP) can support multiple European sites with /24 subnets
+- The reservation (ROM_CORP) is defined once in `ip_pools.nac.yaml`
+- The building simply references the reservation name - no IP addressing details needed in sites file
+- DHCP and DNS settings are inherited from the parent global pool
+- NAC module automatically creates the pool before the reservation before the site association
+
+**Total New Resources**: 2 (global pool + reservation)
+**Lines Added**: 11 lines in `ip_pools.nac.yaml`, 1 line in `sites.nac.yaml`
+
 ### 4. Deploy
 
 ```bash
