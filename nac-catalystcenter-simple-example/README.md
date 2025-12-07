@@ -39,13 +39,29 @@ nac-catalystcenter-simple-example/
 
 ## 🚀 Quick Start
 
-### 1. Update Configuration
+The NAC approach enforces a strict **separation of data from code** - a key principle that simplifies maintenance and enables reusability:
+  
+- **Code** (`main.tf`): Minimal "glue" file that links data to the NAC module
+  - References the community-maintained NAC module from Terraform registry
+  - Rarely changes - only when updating module version or directory structure
+
+- **Data** (`data/` directory): Contains the desired state of your network in YAML files
+  - Site hierarchy, IP pools, network settings - everything specific to YOUR environment
+  - Can be updated independently without touching the Terraform code
+
+This separation means you maintain only your network's desired state (YAML data), while the complex Terraform logic is handled by the centrally-maintained NAC module. Multiple teams can use the same proven codebase with their own configuration data.
+
+**Learn More:** [Separate Data from Code Concept](https://netascode.cisco.com/docs/guides/concepts/separate_data_from_code/)
+
+### 1. main.tf file
 
 The `main.tf` file is the entry point for your Terraform deployment. It defines:
 - **Provider Configuration**: Which Terraform provider to use (Catalyst Center)
 - **Authentication**: How to connect to your Catalyst Center instance (URL, credentials)
 - **NAC Module**: References the Network-as-Code module for simplified configuration
 - **YAML Location**: Specifies where your configuration files are located (`data/` directory)
+
+#### 1.1 Edit the main.tf file
 
 Edit `main.tf` to point to your Catalyst Center:
 
@@ -62,7 +78,29 @@ module "catalyst_center" {
 }
 ```
 
-### 2. Inspect YAML Files
+### 2. Inspect Data Folder
+
+The `data/` folder organizes network configuration into multiple YAML files for better readability and maintainability:
+
+```
+data/
+├── sites.nac.yaml        # Site hierarchy (areas, buildings, floors)
+└── ip_pools.nac.yaml     # IP pools and reservations
+```
+
+**YAML Merging:**
+The NAC module automatically merges multiple YAML files into a single configuration. This allows you to organize complex configurations by function or environment. The merging process:
+
+- **Deep Merges Dictionaries**: Files with the same keys are combined, merging nested structures
+- **Appends Lists**: List items from multiple files are combined into a single list
+- **Matches by Primitive Keys**: For lists of dictionaries, items are merged if they share matching primitive values (like `name`)
+- **Preserves Structure**: Nested configurations are merged recursively, maintaining hierarchy
+
+This modular approach lets you split large configurations (e.g., separate files for sites, IP pools, network settings) while the NAC module handles combining them automatically.
+
+**Learn More:** [Merging YAML Files](https://netascode.cisco.com/docs/guides/concepts/merging_yaml/)
+
+### 3. Inspect YAML Files
 
 The NAC module uses two YAML files to define the network infrastructure in a hierarchical, human-readable format.
 
