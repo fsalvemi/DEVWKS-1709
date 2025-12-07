@@ -243,7 +243,7 @@ catalyst_center:
       # ... other US areas ...
 ```
 
-**New Code** - Add these three area levels for Europe:
+**New Code** - Add these three area levels for Europe at the end of the existing list of areas:
 ```yaml
 # NEW: European area hierarchy
 - name: Europe
@@ -266,7 +266,7 @@ catalyst_center:
       # ... other US buildings ...
 ```
 
-**New Code** - Add the Rome office:
+**New Code** - Add the Rome office at the end of the existing list of buildings:
 ```yaml
 # NEW: Rome office building
 - name: Rome Office
@@ -288,13 +288,15 @@ catalyst_center:
       # ... other US floors ...
 ```
 
-**New Code** - Add the Rome office floor:
+**New Code** - Add the Rome office floor at the end of the existing list of floors:
 ```yaml
 # NEW: Rome office floor
 - name: FLOOR_1
   floor_number: 1
   parent_name: Global/Europe/Italy/Rome/Rome Office
 ```
+
+**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
 
 **What We're Adding**:
 - **3 Area Levels**: Europe → Italy → Rome hierarchy
@@ -391,6 +393,10 @@ ip_pools_reservations:
   ip_pools_reservations:  # NEW: Reference the IP pool reservation
     - ROM_CORP
 ```
+
+**After completing all IP pool modifications**, verify your files against the reference:
+- `data/ip_pools.nac.yaml` should match: [`reference/ip_pools.nac.yaml`](reference/ip_pools.nac.yaml)
+- `data/sites.nac.yaml` should match: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
 
 **What We're Adding**:
 - **1 Global IP Pool**: EU_CORP (10.205.0.0/16) for all European sites
