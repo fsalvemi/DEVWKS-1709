@@ -154,6 +154,45 @@ catalyst_center:
         parent_name: Global/United States/Golden Hills Campus/Sunset Tower
         floor_number: 1
 ```
+#### 3.3.1 Adding a New Site
+
+To add a new site in Rome, Italy, we created a hierarchical structure by adding three area levels (Europe → Italy → Rome) and then a building with a floor:
+
+```yaml
+areas:
+  - name: Europe
+    parent_name: Global
+  - name: Italy
+    parent_name: Global/Europe
+  - name: Rome
+    parent_name: Global/Europe/Italy
+
+buildings:
+  - name: Rome Office
+    latitude: 41.832002
+    longitude: 12.491654
+    address: Via Del Serafico 200, 00142 Roma Rome, Italy
+    country: Italy
+    parent_name: Global/Europe/Italy/Rome
+
+floors:
+  - name: FLOOR_1
+    floor_number: 1
+    parent_name: Global/Europe/Italy/Rome/Rome Office
+```
+
+**What We Added**:
+- **3 Area Levels**: Created a geographic hierarchy from continent to city
+- **1 Building**: Rome Office with exact coordinates and address
+- **1 Floor**: Ground floor (FLOOR_1)
+- **Total**: 5 new resources with just 18 lines of YAML
+
+**Key Points**:
+- Each area references its parent using slash-separated paths
+- The building references the complete hierarchy path
+- No IP pool reservations added yet (see section 3.4.1)
+- No dependencies to manage - NAC module handles ordering automatically
+
 
 **Key Points:**
 - `parent_name` creates the hierarchy using slash-separated paths
@@ -231,15 +270,6 @@ terraform destroy  # Remove all 35 resources
 5. **Maintainable**: Easy to update - change YAML, run `terraform apply`
 6. **Production Ready**: Includes error handling, retries, and state management
 
-## 📊 Complexity Comparison
-
-| Metric | This Approach (NAC) | Native Terraform | Native API |
-|--------|---------------------|------------------|------------|
-| **Lines of Code** | ~164 | ~487 | ~650 |
-| **Files** | 3 | 1 | 1 |
-| **Deployment Time** | 5 min (1 try) | 30-45 min (5 tries) | 2-4 hours |
-| **Schema Knowledge** | Not required | Critical | Critical |
-| **Dependencies** | Auto-managed | 25+ manual | Manual sequencing |
 
 ## 🔗 Resources
 
