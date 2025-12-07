@@ -113,6 +113,15 @@ YAML (YAML Ain't Markup Language) is a human-readable data serialization format 
 - **Comments**: Start with `#` and continue to end of line
 - **Case Sensitive**: `name` and `Name` are different keys
 
+**Network-as-Code YAML Files:**
+Files with the `.nac.yaml` suffix leverage the **Network-as-Code Data Model JSON Schema** for validation and auto-completion. This provides:
+- **Error Checking**: Validates configuration against the data model before deployment
+- **IntelliSense**: IDE support for available options and attributes for each object
+- **Type Safety**: Ensures correct data types and required fields are present
+- **Documentation**: Built-in schema documentation for all available properties
+
+This schema-based approach catches configuration errors early and guides you with available options as you write your YAML files.
+
 #### **Site Hierarchy** (`data/sites.nac.yaml`)
 Defines the organizational structure: areas, buildings, and floors.
 
