@@ -222,9 +222,15 @@ terraform apply  # Deploy to Catalyst Center
 
 ### 5. Adding a New Site
 
-Now let's expand to Europe by adding a Rome office. Edit `data/sites.nac.yaml` to add the hierarchical structure.
+Now let's expand to Europe by adding a Rome office. This requires editing `data/sites.nac.yaml` to add three types of resources: areas, a building, and a floor.
 
-**Context** - Your file currently looks like this:
+#### 5.1 Edit `data/sites.nac.yaml`
+
+This file contains all site hierarchy definitions. We'll add European locations to the existing US structure.
+
+##### 5.1.1 Add Area Hierarchy
+
+**Current Context** - The `areas` section contains US locations:
 ```yaml
 ---
 catalyst_center:
@@ -232,23 +238,14 @@ catalyst_center:
     areas:
       - name: United States
         parent_name: Global
+      - name: Golden Hills Campus
+        parent_name: Global/United States
       # ... other US areas ...
-    
-    buildings:
-      - name: Sunset Tower
-        # ... building details ...
-      # ... other US buildings ...
-    
-    floors:
-      - name: FLOOR_1
-        # ... floor details ...
-      # ... other US floors ...
 ```
 
-**NEW - Add these entries** (copy and paste into your `sites.nac.yaml` file):
-
+**New Code** - Add these three area levels for Europe:
 ```yaml
-# NEW: Add European hierarchy under areas section
+# NEW: European area hierarchy
 - name: Europe
   parent_name: Global
 - name: Italy
@@ -257,8 +254,21 @@ catalyst_center:
   parent_name: Global/Europe/Italy
 ```
 
+##### 5.1.2 Add Building
+
+**Current Context** - The `buildings` section contains US buildings:
 ```yaml
-# NEW: Add Rome building under buildings section
+    buildings:
+      - name: Sunset Tower
+        latitude: 34.099
+        longitude: -118.366
+        # ... other attributes ...
+      # ... other US buildings ...
+```
+
+**New Code** - Add the Rome office:
+```yaml
+# NEW: Rome office building
 - name: Rome Office
   latitude: 41.832002
   longitude: 12.491654
@@ -267,8 +277,20 @@ catalyst_center:
   parent_name: Global/Europe/Italy/Rome
 ```
 
+##### 5.1.3 Add Floor
+
+**Current Context** - The `floors` section contains US floors:
 ```yaml
-# NEW: Add Rome floor under floors section
+    floors:
+      - name: FLOOR_1
+        floor_number: 1
+        parent_name: Global/United States/Golden Hills Campus/Sunset Tower
+      # ... other US floors ...
+```
+
+**New Code** - Add the Rome office floor:
+```yaml
+# NEW: Rome office floor
 - name: FLOOR_1
   floor_number: 1
   parent_name: Global/Europe/Italy/Rome/Rome Office
@@ -297,27 +319,32 @@ terraform apply  # Deploy new site
 
 ### 6. Adding IP Pools for New Site
 
-Now add IP addressing for the Rome office. This requires changes to both YAML files.
+Now add IP addressing for the Rome office. This requires changes to two files: creating a global IP pool in `ip_pools.nac.yaml` and referencing it in `sites.nac.yaml`.
 
-**Step 1: Add Global Pool in `data/ip_pools.nac.yaml`**
+#### 6.1 Edit `data/ip_pools.nac.yaml`
 
-**Context** - Your `ip_pools.nac.yaml` currently has:
+This file contains global IP pools and their reservations.
+
+##### 6.1.1 Add European IP Pool
+
+**Current Context** - The `ip_pools` section contains US pools:
 ```yaml
 ---
 catalyst_center:
   network_settings:
     ip_pools:
       - name: US_CORP
-        # ... pool details ...
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.201.0.0/16
+        # ... pool configuration ...
       - name: US_TECH
-        # ... pool details ...
+        # ... pool configuration ...
       # ... other US pools (US_GUEST, US_BYOD) ...
 ```
 
-**NEW - Add this pool** (copy and paste into the `ip_pools` list):
-
+**New Code** - Add the European corporate pool with Rome reservation:
 ```yaml
-# NEW: Add European corporate IP pool
+# NEW: European corporate IP pool
 - name: EU_CORP
   ip_address_space: IPv4
   ip_pool_cidr: 10.205.0.0/16
@@ -331,9 +358,13 @@ catalyst_center:
       subnet: 10.205.1.0
 ```
 
-**Step 2: Update Rome Office in `data/sites.nac.yaml`**
+#### 6.2 Edit `data/sites.nac.yaml`
 
-**Context** - Your Rome Office building currently looks like:
+Update the Rome Office building to reference the IP pool reservation.
+
+##### 6.2.1 Add IP Pool Reservation to Building
+
+**Current Context** - The Rome Office building (added in step 5):
 ```yaml
 - name: Rome Office
   latitude: 41.832002
@@ -343,14 +374,13 @@ catalyst_center:
   parent_name: Global/Europe/Italy/Rome
 ```
 
-**NEW - Add this field** (add to the Rome Office building entry):
-
+**New Code** - Add the `ip_pools_reservations` field:
 ```yaml
 ip_pools_reservations:
   - ROM_CORP
 ```
 
-So the complete Rome Office entry becomes:
+**Result** - The complete updated building entry:
 ```yaml
 - name: Rome Office
   latitude: 41.832002
@@ -358,8 +388,8 @@ So the complete Rome Office entry becomes:
   address: Via Del Serafico 200, 00142 Roma Rome, Italy
   country: Italy
   parent_name: Global/Europe/Italy/Rome
-  ip_pools_reservations:  # NEW: Add this line
-    - ROM_CORP            # NEW: Add this line
+  ip_pools_reservations:  # NEW: Reference the IP pool reservation
+    - ROM_CORP
 ```
 
 **What We're Adding**:
