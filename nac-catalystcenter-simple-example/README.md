@@ -66,6 +66,15 @@ module "catalyst_center" {
 
 The NAC module uses two YAML files to define the network infrastructure in a hierarchical, human-readable format.
 
+**About YAML:**
+YAML (YAML Ain't Markup Language) is a human-readable data serialization format commonly used for configuration files. Key syntax rules:
+- **Indentation Matters**: Use spaces (not tabs) - typically 2 spaces per level
+- **Key-Value Pairs**: Format is `key: value` with a space after the colon
+- **Lists**: Use a dash (`-`) followed by a space for list items
+- **Nesting**: Child elements are indented under their parent
+- **Comments**: Start with `#` and continue to end of line
+- **Case Sensitive**: `name` and `Name` are different keys
+
 #### **Site Hierarchy** (`data/sites.nac.yaml`)
 Defines the organizational structure: areas, buildings, and floors.
 
