@@ -28,11 +28,18 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
 │   ├── data/
 │   │   ├── sites.nac.yaml                 # Site hierarchy in YAML
 │   │   └── ip_pools.nac.yaml              # IP pools in YAML
-│   └── COMPARISON.md                      # Detailed 3-way comparison
+│   ├── reference_configs/
+│   │   ├── initial_config/                # Base US-only configuration
+│   │   │   ├── sites.nac.yaml             # Initial site hierarchy
+│   │   │   └── ip_pools.nac.yaml          # Initial IP pools
+│   │   └── final_config/                  # Complete configuration with Rome
+│   │       ├── sites.nac.yaml             # Final site hierarchy
+│   │       └── ip_pools.nac.yaml          # Final IP pools
+│   └── README.md                          # Step-by-step lab guide
 │
 ├── native-terraform-simple-example/       # Native Terraform approach
 │   ├── main.tf                            # All 35 resources in HCL
-│   └── README.md                          # Error documentation
+│   └── README.md                          # Complexity comparison
 │
 └── native-api-simple-example/             # Native API approach
     └── native_api_implementation.py       # Python REST API client
