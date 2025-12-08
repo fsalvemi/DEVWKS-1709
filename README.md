@@ -5,7 +5,7 @@ This repository demonstrates three different approaches to configuring Cisco Cat
 ## 🎯 Purpose
 
 This is a teaching/demonstration repository for **DEVWKS-1709 Lab**, showcasing the difference in complexity between:
-1. **NAC Module (YAML-based)** - Simplified, declarative configuration
+1. **NAC Module (YAML-based)** - Catalyst Center as Code Simplified, declarative configuration
 2. **Native Terraform (HCL)** - Direct provider resource usage
 3. **Native API (Python)** - Direct REST API implementation
 
@@ -44,6 +44,8 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
 └── native-api-simple-example/             # Native API approach
     └── native_api_implementation.py       # Python REST API client
 ```
+
+Note that the reference_configs folder is not required for the Catalyst Center as Code solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
 ## Lab Access
 
