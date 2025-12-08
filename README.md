@@ -13,11 +13,11 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
 
 ## 📊 Quick Comparison
 
-| Approach | Lines of Code | Files | Complexity | Time to Deploy |
-|----------|--------------|-------|------------|----------------|
-| **NAC Module** | ~164 | 3 | ⭐ Simple | ✅ 5 min (1 iteration) |
-| **Native Terraform** | ~487 | 1 | ⭐⭐⭐ Complex | ⚠️ 30-45 min (5 iterations) |
-| **Native API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex | ❌ 2-4 hours |
+| Approach | Lines of Code | Files | Complexity |
+|----------|--------------|-------|------------|
+| **NAC Module** | ~164 | 3 | ⭐ Simple |
+| **Native Terraform** | ~487 | 1 | ⭐⭐⭐ Complex |
+| **Native API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex |
 
 ## 📁 Repository Structure
 
@@ -83,7 +83,6 @@ Each approach deploys **35 total resources** to Catalyst Center:
 - ✅ Automatic dependency management
 - ✅ Built-in error handling and retries
 - ✅ Pattern-based, intuitive structure
-- ✅ **Deployed successfully on first attempt**
 
 **When to use:**
 - Production deployments at scale
@@ -109,15 +108,8 @@ buildings:
 - ⚠️ Full control over resources
 - ⚠️ 3x more verbose than NAC
 - ⚠️ Requires 25+ explicit `depends_on` declarations
-- ⚠️ Non-intuitive attribute names
-- ⚠️ **Required 5 debugging iterations to deploy successfully**
+- ⚠️ Requires analysis to properly map API objects to TF attribute names
 
-**Common Issues Encountered:**
-1. Attribute name confusion (`ip_subnet` vs `ip_pool_cidr`)
-2. Missing required attributes (`rf_model`, `width`, `height`, `length` on floors)
-3. Case sensitivity varies by resource (`Generic` vs `generic`)
-4. CIDR format requirements (`10.201.0.0/16` not `10.201.0.0`)
-5. Gateway/DHCP server conflicts (must use different IPs)
 
 **When to use:**
 - Need features not yet in NAC module
@@ -144,44 +136,15 @@ buildings:
 - Building custom tooling
 - Need to bypass Terraform entirely
 
-## 🧪 Real-World Results
+⚠️ Requires extensive coding, testing, and debugging
 
-### NAC Module
-```bash
-cd nac-catalystcenter-simple-example/
-terraform init
-terraform apply
-```
-**Result:** ✅ Success on first try - all 35 resources created
-
-### Native Terraform
-```bash
-cd native-terraform-simple-example/
-terraform init
-terraform plan    # ❌ Error: missing ip_subnet
-# Fix #1...
-terraform plan    # ❌ Error: missing floor attributes  
-# Fix #2...
-terraform plan    # ❌ Error: case sensitivity
-# Fix #3...
-terraform apply   # ❌ Error: invalid CIDR
-# Fix #4...
-terraform apply   # ❌ Error: gateway conflict
-# Fix #5...
-terraform apply   # ✅ Success!
-```
-**Result:** ✅ Success after 5 debugging iterations (~30-45 minutes)
-
-### Native API
-**Result:** ⚠️ Requires extensive coding, testing, and debugging (~2-4 hours)
 
 ## 📋 Key Takeaways
 
 1. **NAC Module reduces complexity by 66-75%** compared to native approaches
 2. **Schema knowledge is critical** for native Terraform (non-obvious attributes, case sensitivity)
-3. **Runtime validation differs from schema validation** (CIDR formats, business rules)
-4. **Abstraction layers prevent common mistakes** (gateway conflicts, missing attributes)
-5. **Production deployments benefit from declarative approaches** (state management, rollback)
+3. **Abstraction layers prevent common mistakes** (gateway conflicts, missing attributes)
+4. **Production deployments benefit from declarative approaches** (state management, rollback)
 
 ## 🔗 Resources
 
