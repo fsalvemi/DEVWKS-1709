@@ -304,11 +304,11 @@ catalyst_center:
   parent_name: Global/Europe/Italy/Rome/Rome Office
 ```
 
-**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference/sites.nac.yaml`](reference/sites.nac.yaml) with the exception of the ip_pools_reservations that we will add in the next step
+**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference_configs/final_config/sites.nac.yaml`](reference_configs/final_config/sites.nac.yaml) with the exception of the ip_pools_reservations that we will add in the next step
 
 Verify your changes:
 ```bash
-diff -c data/sites.nac.yaml reference/sites.nac.yaml
+diff -c data/sites.nac.yaml reference_configs/final_config/sites.nac.yaml
 ```
 
 **What We're Adding**:
@@ -413,17 +413,17 @@ ip_pools_reservations:
 ```
 
 **After completing all IP pool modifications**, verify your files against the reference:
-- `data/ip_pools.nac.yaml` should match: [`reference/ip_pools.nac.yaml`](reference/ip_pools.nac.yaml)
-- `data/sites.nac.yaml` should match: [`reference/sites.nac.yaml`](reference/sites.nac.yaml)
+- `data/ip_pools.nac.yaml` should match: [`reference_configs/final_config/ip_pools.nac.yaml`](reference_configs/final_config/ip_pools.nac.yaml)
+- `data/sites.nac.yaml` should match: [`reference_configs/final_config/sites.nac.yaml`](reference_configs/final_config/sites.nac.yaml)
 
 Verify your changes to `ip_pools.nac.yaml`:
 ```bash
-diff -c data/ip_pools.nac.yaml reference/ip_pools.nac.yaml
+diff -c data/ip_pools.nac.yaml reference_configs/final_config/ip_pools.nac.yaml
 ```
 
 Verify your changes to `sites.nac.yaml`:
 ```bash
-diff -c data/sites.nac.yaml reference/sites.nac.yaml
+diff -c data/sites.nac.yaml reference_configs/final_config/sites.nac.yaml
 ```
 
 **What We're Adding**:
