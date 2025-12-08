@@ -23,18 +23,16 @@ terraform plan   # Review changes
 terraform apply  # Deploy to Catalyst Center
 ```
 
-**Note**: This implementation required 5 debugging iterations to get working, fixing schema errors around IP pools, floors, and resource dependencies.
-
 ## ⚠️ Complexity Challenges
 
 While this implementation works, it demonstrates several challenges:
 
-### 1. **Non-Intuitive Attribute Names**
+### 1. **You need to discover how API objects are mapped to TF Attribute Names**
 - Provider expects: `ip_subnet` (with CIDR like `10.201.0.0/16`)
 - API/Documentation uses: `ip_pool_cidr`
 - Reality: You must memorize exact provider schema differences
 
-### 2. **Hidden Required Attributes**
+### 2. **You need to discover and configure Required Attributes**
 For `catalystcenter_floor`, you must provide non-obvious attributes:
 - `rf_model` - Radio Frequency model (not obvious)
 - `width` - Floor width in feet/meters
