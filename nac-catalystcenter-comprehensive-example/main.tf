@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "catalystcenter" {
-  username    = "username"
-  password    = "password"
-  url         = "https://dnac.url"
+  username    = "admin"
+  password    = "C1sco12345"
+  url         = "https://198.18.129.100"
   max_timeout = 600
 }
 

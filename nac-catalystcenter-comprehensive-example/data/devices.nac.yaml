@@ -6,7 +6,7 @@ catalyst_center:
         fqdn_name: BR10.cisco.eu
         device_ip: 198.18.130.10
         pid: C9KV-UADP-8P
-        state: INIT
+        state: PROVISION
         device_role: BORDER ROUTER
         site: Global/Poland/Krakow/Bld A
         fabric_site: Global/Poland/Krakow
