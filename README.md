@@ -1,35 +1,27 @@
-# NAC Catalyst Center Simple Example - Complexity Comparison
+# DEVWKS-1709 Lab
 
-This repository demonstrates three different approaches to configuring Cisco Catalyst Center infrastructure, comparing their complexity, maintainability, and ease of use.
+This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios and two learning objectives
 
-## 🎯 Purpose
-
-This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios.
-
-| Scenario | Repository | Approach |
+| Scenario | Repository | Approach | Learning Objective | 
 |----------|--------------|---------|
-| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code |
-| Simple Example| native-terraform-simple-example | Native Terraform |
-| Simple Example| native-api-simple-example | Native Catalyst Center API |
-| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code |
+| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | comparing approach complexity |
+| Simple Example| native-terraform-simple-example | Native Terraform | comparing approach complexity |
+| Simple Example| native-api-simple-example | Native Catalyst Center API | comparing approach complexity |
+| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | demonstrate full SDA Fabric Deployment |
 
+The first three repositories demonstrates three approaches to achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
+This will allow to compare their complexity, maintainability, and ease of use.
 
-showcasing the difference in complexity between:
-1. **NAC Module (YAML-based)** - Catalyst Center as Code Simplified, declarative configuration
-2. **Native Terraform (HCL)** - Direct provider resource usage
-3. **Native API (Python)** - Direct REST API implementation
+The forth repository includes comprehensive example that deploys a full SD-Access fabric using the catalyst center as code approach.
+This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Access fabric
 
-All three approaches achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
-
-The repository also includes a comprehensive example that deploys a fulls SD-Access fabric using the catalyst center as code approach.
-
-## 📊 Quick Comparison
+## 📊 Approach Comparison for for Simple Example deployment using different approaches
 
 | Approach | Lines of Code | Files | Complexity |
 |----------|--------------|-------|------------|
-| **NAC Module** | ~164 | 3 | ⭐ Simple |
+| **Catalyst Center as Code** | ~164 | 3 | ⭐ Simple |
 | **Native Terraform** | ~487 | 1 | ⭐⭐⭐ Complex |
-| **Native API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex |
+| **Native Catalyst Center API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex |
 
 ## 📁 Repository Structure
 
