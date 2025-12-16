@@ -57,9 +57,10 @@ Note that the reference_configs folder is not required for the Catalyst Center a
 
 ## Suggested Learning Path
 
-- Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
-- Optionally try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
-- Optionally Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
+- Step 1: Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
+- Step 2 (Optional): try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+- Step 3 (Optional): Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
+- Step 4 (Stretch): deploy a complete SD-Access Fabric using nac-catalystcenter-comprehensive-example
 
 ## 🚀 What's Deployed
 
