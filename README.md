@@ -3,7 +3,7 @@
 This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios and two learning objectives
 
 | Scenario | Repository | Approach | Learning Objective | 
-|----------|--------------|---------|
+|----------|--------------|---------|---------|
 | Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | comparing approach complexity |
 | Simple Example| native-terraform-simple-example | Native Terraform | comparing approach complexity |
 | Simple Example| native-api-simple-example | Native Catalyst Center API | comparing approach complexity |
