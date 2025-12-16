@@ -1,19 +1,47 @@
 # DEVWKS-1709 Lab
 
-This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios and two learning objectives
+This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios and three learning objectives
 
 | Scenario | Repository | Approach | Learning Objective | 
 |----------|--------------|---------|---------|
-| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | comparing approach complexity |
-| Simple Example| native-terraform-simple-example | Native Terraform | comparing approach complexity |
-| Simple Example| native-api-simple-example | Native Catalyst Center API | comparing approach complexity |
-| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | demonstrate full SDA Fabric Deployment |
+| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | Familiarize with Catalyst Center as Code |
+| Simple Example| native-terraform-simple-example | Native Terraform | Comparing approach complexity |
+| Simple Example| native-api-simple-example | Native Catalyst Center API | Comparing approach complexity |
+| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | Demonstrate full SDA Fabric Deployment |
 
 The first three repositories demonstrates three approaches to achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
 This will allow to compare their complexity, maintainability, and ease of use.
 
 The forth repository includes comprehensive example that deploys a full SD-Access fabric using the catalyst center as code approach.
 This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Access fabric
+
+## Suggested Learning Path
+
+### Use the simple example to familiarize with Catalyst Center as Code
+
+#### Step 1: simple example with nac-catalyst center approach
+
+Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
+
+#### Step 2 (Optional): simple example with Terraform Native API approach
+
+Try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+
+#### Step 3 (Optional): simple example with Catalyst Center Native API approach
+
+Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
+
+#### Step 4 (Stretch): comprehensive example with nac-catalyst center approach
+
+Deploy a complete SD-Access Fabric using [nac-catalystcenter-comprehensive-example](nac-catalystcenter-comprehensive-example/README.md)
+
+## Lab Access
+
+- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
+- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
+  - IP: 198.18.133.20
+  - Username: admin
+  - Password: C1sco12345
 
 ## 📊 Approach Comparison for for Simple Example deployment using different approaches
 
@@ -51,31 +79,9 @@ This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Ac
 
 Note that the reference_configs folder is not required for the Catalyst Center as Code solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
-## Lab Access
 
-- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
-- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
-  - IP: 198.18.133.20
-  - Username: admin
-  - Password: C1sco12345
 
-## Suggested Learning Path
 
-### Step 1: simple example with nac-catalyst center approach
-
-Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
-
-### Step 2 (Optional): simple example with Terraform Native API approach
-
-Try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
-
-### Step 3 (Optional): simple example with Catalyst Center Native API approach
-
-Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
-
-### Step 4 (Stretch): comprehensive example with nac-catalyst center approach
-
-Deploy a complete SD-Access Fabric using [nac-catalystcenter-comprehensive-example](nac-catalystcenter-comprehensive-example/README.md)
 
 ## What's Deployed in the simple example scenario
 
