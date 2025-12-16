@@ -69,18 +69,9 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
 
 Note that the reference_configs folder is not required for the Catalyst Center as Code solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
-## What's Deployed in the simple example scenario
+## What's Deployed in the Simple Example Scenario
 
-In the simple example scenario, each approach deploys **35 total resources** to Catalyst Center:
-
-### Site Hierarchy (15 resources)
-- **5 Areas**: United States, Golden Hills Campus, Lakefront Tower, Oceanfront Mansion, Desert Oasis Branch
-- **4 Buildings**: Sunset Tower, Windy City Plaza, Art Deco Mansion, Desert Oasis Tower
-- **6 Floors**: Multiple floors across different buildings
-
-### IP Resources (20 resources)
-- **4 Global IP Pools**: US_CORP, US_TECH, US_GUEST, US_BYOD
-- **16 IP Pool Reservations**: 4 reservations per site (CORP, TECH, GUEST, BYOD)
+For details on what infrastructure is deployed in the Simple Example scenario, see [Simple Example Deployment](SIMPLE_EXAMPLE_DEPLOYMENT.md).
 
 ## 🎓 Learning Objectives
 
