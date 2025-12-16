@@ -4,12 +4,24 @@ This repository demonstrates three different approaches to configuring Cisco Cat
 
 ## 🎯 Purpose
 
-This is a teaching/demonstration repository for **DEVWKS-1709 Lab**, showcasing the difference in complexity between:
+This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios.
+
+| Scenario | Repository | Approach |
+|----------|--------------|---------|
+| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code |
+| Simple Example| native-terraform-simple-example | Native Terraform |
+| Simple Example| native-api-simple-example | Native Catalyst Center API |
+| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code |
+
+
+showcasing the difference in complexity between:
 1. **NAC Module (YAML-based)** - Catalyst Center as Code Simplified, declarative configuration
 2. **Native Terraform (HCL)** - Direct provider resource usage
 3. **Native API (Python)** - Direct REST API implementation
 
 All three approaches achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
+
+The repository also includes a comprehensive example that deploys a fulls SD-Access fabric using the catalyst center as code approach.
 
 ## 📊 Quick Comparison
 
@@ -57,14 +69,25 @@ Note that the reference_configs folder is not required for the Catalyst Center a
 
 ## Suggested Learning Path
 
-- Step 1: Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
-- Step 2 (Optional): try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
-- Step 3 (Optional): Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
-- Step 4 (Stretch): deploy a complete SD-Access Fabric using nac-catalystcenter-comprehensive-example
+### Step 1: simple example with nac-catalyst center approach
 
-## 🚀 What's Deployed
+Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
 
-Each approach deploys **35 total resources** to Catalyst Center:
+### Step 2 (Optional): simple example with Terraform Native API approach
+
+Try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+
+### Step 3 (Optional): simple example with Catalyst Center Native API approach
+
+Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
+
+### Step 4 (Stretch): comprehensive example with nac-catalyst center approach
+
+Deploy a complete SD-Access Fabric using [nac-catalystcenter-comprehensive-example](nac-catalystcenter-comprehensive-example/README.md)
+
+## What's Deployed in the simple example scenario
+
+In the simple example scenario, each approach deploys **35 total resources** to Catalyst Center:
 
 ### Site Hierarchy (15 resources)
 - **5 Areas**: United States, Golden Hills Campus, Lakefront Tower, Oceanfront Mansion, Desert Oasis Branch
