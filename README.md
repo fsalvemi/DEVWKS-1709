@@ -10,7 +10,9 @@ This is a demonstration repository for **DEVWKS-1709 Lab** and includes four rep
 | Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | Demonstrate full SDA Fabric Deployment |
 
 The first three repositories demonstrates three approaches to achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
-This will allows to familiarize with Catalyst Center as Code solution and compare its complexity, maintainability, and ease of use with the other approaches
+
+The first example allows to familiarize with the Catalyst Center as Code solution.
+The second and third examples try to achieve the same result using Native Terraform and Native Catalyst Center API. This allows to compare the complexity, maintainability, and ease of use of the three approaches.
 
 The forth repository includes comprehensive example that deploys a full SD-Access fabric using the catalyst center as code approach.
 This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Access fabric
