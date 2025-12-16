@@ -1,5 +1,495 @@
-[![Terraform Version](https://img.shields.io/badge/terraform-%5E1.6-blue)](https://www.terraform.io)
+# NAC Module Approach - Simple Example
 
-# Cisco Catalyst Center as Code - Simple example
+This folder demonstrates the **Network-as-Code (NAC) Module** approach to configuring Cisco Catalyst Center using YAML-based declarative configuration.
 
-The goal of this example is to allow users to allow users to instantiate SD-Access Fabric in minutes using an easy to use, opinionated data model. It takes away the complexity of having to deal with references, dependencies or loops. By completely separating data (defining variables) from logic (infrastructure declaration), it allows the user to focus on describing the intended configuration while using a set of maintained and tested Terraform Modules without the need to understand the low-level CatalystCenter API.
+## Lab Access
+
+If not already done, follow the [instructions for lab access](../README.md#lab-access) 
+
+## Clone Repository
+
+- Close Ubuntu WSL and VS Code before starting this lab! This prevents creating nested repository folders within your existing lab directory.
+- Launch a new session of Ubuntu WSL machine.
+- In the terminal window, type the following command to clone the repository
+  ```bash
+  git clone https://github.com/netascode/nac-catalystcenter-simple-example.git
+  ```
+
+
+## 🎯 What This Example Does
+
+Deploys a complete network infrastructure to Catalyst Center:
+- **5 Areas**: United States, Golden Hills Campus, Lakefront Tower, Oceanfront Mansion, Desert Oasis Branch
+- **4 Buildings**: Sunset Tower, Windy City Plaza, Art Deco Mansion, Desert Oasis Tower  
+- **6 Floors**: Multiple floors across different buildings
+- **4 Global IP Pools**: US_CORP (10.201.0.0/16), US_TECH (10.202.0.0/16), US_GUEST (10.203.0.0/16), US_BYOD (10.204.0.0/16)
+- **16 IP Pool Reservations**: 4 reservations per building (CORP, TECH, GUEST, BYOD)
+
+**Total Resources Created**: 35
+
+## 📁 File Structure
+
+```
+nac-catalystcenter-simple-example/
+├── main.tf                    # Terraform configuration using NAC module
+└── data/
+    ├── sites.nac.yaml        # Site hierarchy (areas, buildings, floors)
+    └── ip_pools.nac.yaml     # IP pools and reservations
+```
+
+## 🚀 Quick Start
+
+The NAC approach enforces a strict **separation of data from code** - a key principle that simplifies maintenance and enables reusability:
+  
+- **Code** (`main.tf`): Minimal "glue" file that links data to the NAC module
+  - References the community-maintained NAC module from Terraform registry
+  - Rarely changes - only when updating module version or directory structure
+
+- **Data** (`data/` directory): Contains the desired state of your network in YAML files
+  - Site hierarchy, IP pools, network settings - everything specific to YOUR environment
+  - Can be updated independently without touching the Terraform code
+
+This separation means you maintain only your network's desired state (YAML data), while the complex Terraform logic is handled by the centrally-maintained NAC module. Multiple teams can use the same proven codebase with their own configuration data.
+
+**Learn More:** [Separate Data from Code Concept](https://netascode.cisco.com/docs/guides/concepts/separate_data_from_code/)
+
+### 1. main.tf file
+
+The `main.tf` file is the entry point for your Terraform deployment. It defines:
+- **Provider Configuration**: Which Terraform provider to use (Catalyst Center)
+- **Authentication**: How to connect to your Catalyst Center instance (URL, credentials)
+- **NAC Module**: References the Network-as-Code module for simplified configuration
+- **YAML Location**: Specifies where your configuration files are located (`data/` directory)
+
+#### 1.1 Edit the main.tf file
+
+Edit `main.tf` to point to your Catalyst Center:
+
+```hcl
+module "catalyst_center" {
+  source  = "netascode/nac-catalystcenter/catalystcenter"
+  version = ">= 0.2.0"
+
+  catalystcenter_url      = "https://YOUR-CATALYST-CENTER-IP"
+  catalystcenter_username = "admin"
+  catalystcenter_password = "your-password"
+  
+  yaml_directories = ["data/"]
+}
+```
+
+### 2. Inspect Data Folder
+
+The `data/` folder organizes network configuration into multiple YAML files for better readability and maintainability:
+
+```
+data/
+├── sites.nac.yaml        # Site hierarchy (areas, buildings, floors)
+└── ip_pools.nac.yaml     # IP pools and reservations
+```
+
+**YAML Merging:**
+The NAC module automatically merges multiple YAML files into a single configuration. This allows you to organize complex configurations by function or environment. The merging process:
+
+- **Deep Merges Dictionaries**: Files with the same keys are combined, merging nested structures
+- **Appends Lists**: List items from multiple files are combined into a single list
+- **Matches by Primitive Keys**: For lists of dictionaries, items are merged if they share matching primitive values (like `name`)
+- **Preserves Structure**: Nested configurations are merged recursively, maintaining hierarchy
+
+This modular approach lets you split large configurations (e.g., separate files for sites, IP pools, network settings) while the NAC module handles combining them automatically.
+
+**Learn More:** [Merging YAML Files](https://netascode.cisco.com/docs/guides/concepts/merging_yaml/)
+
+### 3. Inspect YAML Files
+
+The NAC module uses two YAML files to define the network infrastructure in a hierarchical, human-readable format.
+
+#### 3.1 About YAML
+YAML (YAML Ain't Markup Language) is a human-readable data serialization format commonly used for configuration files. Key syntax rules:
+- **Indentation Matters**: Use spaces (not tabs) - typically 2 spaces per level
+- **Key-Value Pairs**: Format is `key: value` with a space after the colon
+- **Lists**: Use a dash (`-`) followed by a space for list items
+- **Nesting**: Child elements are indented under their parent
+- **Comments**: Start with `#` and continue to end of line
+- **Case Sensitive**: `name` and `Name` are different keys
+
+### 3.2 Network-as-Code YAML Files
+Files with the `.nac.yaml` suffix leverage the **Network-as-Code Data Model JSON Schema** for validation and auto-completion. This provides:
+- **Error Checking**: Validates configuration against the data model before deployment
+- **IntelliSense**: IDE support for available options and attributes for each object
+- **Type Safety**: Ensures correct data types and required fields are present
+- **Documentation**: Built-in schema documentation for all available properties
+
+This schema-based approach catches configuration errors early and guides you with available options as you write your YAML files.
+
+### 3.3 Site Hierarchy (`data/sites.nac.yaml`)
+
+Defines the organizational structure: areas, buildings, and floors. The base configuration includes US-based sites:
+
+```yaml
+---
+catalyst_center:
+  sites:
+    areas:
+      - name: United States
+        parent_name: Global
+      - name: Golden Hills Campus
+        parent_name: Global/United States
+    
+    buildings:
+      - name: Sunset Tower
+        latitude: 34.099
+        longitude: -118.366
+        address: 8358 Sunset Blvd, Los Angeles, CA 90069
+        country: United States
+        parent_name: Global/United States/Golden Hills Campus
+        ip_pools_reservations:
+          - ST_CORP
+          - ST_TECH
+          - ST_GUEST
+          - ST_BYOD
+    
+    floors:
+      - name: Floor 1
+        parent_name: Global/United States/Golden Hills Campus/Sunset Tower
+        floor_number: 1
+```
+
+**Key Points:**
+- `parent_name` creates the hierarchy using slash-separated paths
+- Buildings include geographic coordinates and addresses
+- IP pool reservations are referenced by name
+
+**Data Model Overview:**
+The `sites` class supports areas, buildings, and floors with:
+- **Credential Management**: CLI, SNMPv2/v3, HTTPS credentials at any hierarchy level
+- **Network Settings**: AAA servers, network configuration, and telemetry settings
+- **IP Pool Reservations**: Reference pools by name for automatic site-specific allocation
+- **Hierarchical Structure**: Use slash-separated paths (e.g., `Global/Americas/USA`)
+
+**Full Documentation:** [Catalyst Center Sites Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/sites/area/)
+
+### 3.4 IP Pools (`data/ip_pools.nac.yaml`)
+
+Defines global IP pools and site-specific reservations for US locations:
+
+```yaml
+---
+catalyst_center:
+  network_settings:
+    ip_pools:
+      - name: US_CORP
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.201.0.0/16
+        dhcp_servers:
+          - 10.201.0.2
+        dns_servers:
+          - 10.201.0.2
+        ip_pools_reservations:
+          - name: ST_CORP
+            prefix_length: 24
+            subnet: 10.201.2.0
+          - name: DOT_CORP
+            prefix_length: 24
+            subnet: 10.201.1.0
+```
+
+**Key Points:**
+- Each global pool contains multiple site-specific reservations
+- DHCP and DNS servers are defined at the pool level
+- Reservations inherit settings from their parent pool
+
+**Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
+
+### 4. Deploy Base Configuration
+
+Deploy the initial US-based network infrastructure:
+
+```bash
+terraform init
+```
+
+Review the changes:
+```bash
+terraform plan
+```
+
+Deploy to Catalyst Center:
+```bash
+terraform apply
+```
+
+**Expected Result**: ✅ Success on first apply - all 35 resources created
+- 5 Areas (United States + 4 campus/branch areas)
+- 4 Buildings (Sunset Tower, Windy City Plaza, Art Deco Mansion, Desert Oasis Tower)
+- 6 Floors across the buildings
+- 4 Global IP Pools (US_CORP, US_TECH, US_GUEST, US_BYOD)
+- 16 IP Pool Reservations (4 per building)
+
+## 🔄 Making Changes
+
+### 5. Adding a New Site
+
+Now let's expand to Europe by adding a Rome office. This requires editing `data/sites.nac.yaml` to add three types of resources: areas, a building, and a floor.
+
+#### 5.1 Edit `data/sites.nac.yaml`
+
+This file contains all site hierarchy definitions. We'll add European locations to the existing US structure.
+
+##### 5.1.1 Add Area Hierarchy
+
+**Current Context** - The `areas` section contains US locations:
+```yaml
+---
+catalyst_center:
+  sites:
+    areas:
+      - name: United States
+        parent_name: Global
+      - name: Golden Hills Campus
+        parent_name: Global/United States
+      # ... other US areas ...
+```
+
+**New Code** - Add these three area levels for Europe at the end of the existing list of areas:
+```yaml
+# NEW: European area hierarchy
+- name: Europe
+  parent_name: Global
+- name: Italy
+  parent_name: Global/Europe
+- name: Rome
+  parent_name: Global/Europe/Italy
+```
+
+##### 5.1.2 Add Building
+
+**Current Context** - The `buildings` section contains US buildings:
+```yaml
+    buildings:
+      - name: Sunset Tower
+        latitude: 34.099
+        longitude: -118.366
+        # ... other attributes ...
+      # ... other US buildings ...
+```
+
+**New Code** - Add the Rome office at the end of the existing list of buildings:
+```yaml
+# NEW: Rome office building
+- name: Rome Office
+  latitude: 41.832002
+  longitude: 12.491654
+  address: Via Del Serafico 200, 00142 Roma Rome, Italy
+  country: Italy
+  parent_name: Global/Europe/Italy/Rome
+```
+
+##### 5.1.3 Add Floor
+
+**Current Context** - The `floors` section contains US floors:
+```yaml
+    floors:
+      - name: FLOOR_1
+        floor_number: 1
+        parent_name: Global/United States/Golden Hills Campus/Sunset Tower
+      # ... other US floors ...
+```
+
+**New Code** - Add the Rome office floor at the end of the existing list of floors:
+```yaml
+# NEW: Rome office floor
+- name: FLOOR_1
+  floor_number: 1
+  parent_name: Global/Europe/Italy/Rome/Rome Office
+```
+
+**After completing these modifications**, your `data/sites.nac.yaml` file should look like the reference file: [`reference_configs/final_config/sites.nac.yaml`](reference_configs/final_config/sites.nac.yaml) with the exception of the ip_pools_reservations that we will add in the next step
+
+Verify your changes:
+```bash
+diff -c data/sites.nac.yaml reference_configs/final_config/sites.nac.yaml
+```
+
+**What We're Adding**:
+- **3 Area Levels**: Europe → Italy → Rome hierarchy
+- **1 Building**: Rome Office with coordinates and address
+- **1 Floor**: Ground floor
+- **Total**: 5 new resources with just 18 lines of YAML
+
+**Key Points**:
+- Each area references its parent using slash-separated paths
+- The building references the complete hierarchy path
+- No IP pool reservation yet - we'll add that in the next step
+- No dependencies to manage - NAC module handles ordering automatically
+
+**Deploy the Site Addition**:
+
+Review the changes:
+```bash
+terraform plan
+```
+
+Deploy new site:
+```bash
+terraform apply
+```
+
+**Expected Result**: ✅ 5 new resources added (3 areas, 1 building, 1 floor)
+
+### 6. Adding IP Pools for New Site
+
+Now add IP addressing for the Rome office. This requires changes to two files: creating a global IP pool in `ip_pools.nac.yaml` and referencing it in `sites.nac.yaml`.
+
+#### 6.1 Edit `data/ip_pools.nac.yaml`
+
+This file contains global IP pools and their reservations.
+
+##### 6.1.1 Add European IP Pool
+
+**Current Context** - The `ip_pools` section contains US pools:
+```yaml
+---
+catalyst_center:
+  network_settings:
+    ip_pools:
+      - name: US_CORP
+        ip_address_space: IPv4
+        ip_pool_cidr: 10.201.0.0/16
+        # ... pool configuration ...
+      - name: US_TECH
+        # ... pool configuration ...
+      # ... other US pools (US_GUEST, US_BYOD) ...
+```
+
+**New Code** - Add the European corporate pool with Rome reservation:
+```yaml
+# NEW: European corporate IP pool
+- name: EU_CORP
+  ip_address_space: IPv4
+  ip_pool_cidr: 10.205.0.0/16
+  dns_servers:
+    - 10.205.0.1
+  dhcp_servers:
+    - 10.205.0.1
+  ip_pools_reservations:
+    - name: ROM_CORP
+      prefix_length: 24
+      subnet: 10.205.1.0
+```
+
+#### 6.2 Edit `data/sites.nac.yaml`
+
+Update the Rome Office building to reference the IP pool reservation.
+
+##### 6.2.1 Add IP Pool Reservation to Building
+
+**Current Context** - The Rome Office building (added in step 5):
+```yaml
+- name: Rome Office
+  latitude: 41.832002
+  longitude: 12.491654
+  address: Via Del Serafico 200, 00142 Roma Rome, Italy
+  country: Italy
+  parent_name: Global/Europe/Italy/Rome
+```
+
+**New Code** - Add the `ip_pools_reservations` field:
+```yaml
+ip_pools_reservations:
+  - ROM_CORP
+```
+
+**Result** - The complete updated building entry:
+```yaml
+- name: Rome Office
+  latitude: 41.832002
+  longitude: 12.491654
+  address: Via Del Serafico 200, 00142 Roma Rome, Italy
+  country: Italy
+  parent_name: Global/Europe/Italy/Rome
+  ip_pools_reservations:  # NEW: Reference the IP pool reservation
+    - ROM_CORP
+```
+
+**After completing all IP pool modifications**, verify your files against the reference:
+- `data/ip_pools.nac.yaml` should match: [`reference_configs/final_config/ip_pools.nac.yaml`](reference_configs/final_config/ip_pools.nac.yaml)
+- `data/sites.nac.yaml` should match: [`reference_configs/final_config/sites.nac.yaml`](reference_configs/final_config/sites.nac.yaml)
+
+Verify your changes to `ip_pools.nac.yaml`:
+```bash
+diff -c data/ip_pools.nac.yaml reference_configs/final_config/ip_pools.nac.yaml
+```
+
+Verify your changes to `sites.nac.yaml`:
+```bash
+diff -c data/sites.nac.yaml reference_configs/final_config/sites.nac.yaml
+```
+
+**What We're Adding**:
+- **1 Global IP Pool**: EU_CORP (10.205.0.0/16) for all European sites
+- **1 IP Pool Reservation**: ROM_CORP (10.205.1.0/24) carved from the global pool
+- **Total**: 2 new resources
+
+**Key Points**:
+- The global pool can support multiple European sites with /24 subnets
+- The reservation is defined once in `ip_pools.nac.yaml`
+- The building simply references the reservation by name
+- DHCP and DNS settings are inherited from the parent global pool
+- NAC module automatically creates pool → reservation → site association in the correct order
+
+**Deploy the IP Pool Addition**:
+
+Review the changes:
+```bash
+terraform plan
+```
+
+Deploy IP pools:
+```bash
+terraform apply
+```
+
+**Expected Result**: ✅ 2 new resources added (1 global pool, 1 reservation)
+
+**Total New Resources**: 7 (5 site resources + 2 IP pool resources)
+**Total Lines Added**: ~30 lines across two YAML files
+
+### 7. Clean Up
+
+To remove all deployed resources from Catalyst Center:
+
+```bash
+terraform destroy  # Remove all 35 resources
+```
+
+**Note**: Terraform will show you a plan of what will be destroyed and ask for confirmation before proceeding.
+
+
+## ✅ Key Benefits
+
+1. **Simple & Intuitive**: YAML configuration mirrors network hierarchy naturally
+2. **Automatic Dependencies**: Module handles resource ordering automatically
+3. **No Schema Knowledge Required**: Intuitive field names (no `ip_subnet` vs `ip_pool_cidr` confusion)
+4. **Built-in Validation**: Module catches configuration errors before deployment
+5. **Maintainable**: Easy to update - change YAML, run `terraform apply`
+6. **Production Ready**: Includes error handling, retries, and state management
+
+
+## 🔗 Resources
+
+- **Original Example**: [nac-catalystcenter-simple-example](https://github.com/netascode/nac-catalystcenter-simple-example/)
+- **NAC Module**: [terraform-catalystcenter-nac-catalystcenter](https://registry.terraform.io/modules/netascode/nac-catalystcenter/catalystcenter/latest)
+- **Module Documentation**: [GitHub Repository](https://github.com/netascode/terraform-catalystcenter-nac-catalystcenter)
+- **Catalyst Center Provider**: [CiscoDevNet Provider](https://registry.terraform.io/providers/CiscoDevNet/catalystcenter/latest)
+
+## 📚 Learning Path
+
+1. **Start Here** - Understand YAML structure and NAC module basics
+2. **Compare** - Review `../native-terraform-simple-example/` to see complexity difference
+3. **Explore** - Check `../native-api-simple-example/` for API implementation
+4. **Decide** - Use insights from comparison for your own projects
+
+---
+
+**Part of DEVWKS-1709 Lab** | For complete comparison, see repository root [README.md](../README.md)
