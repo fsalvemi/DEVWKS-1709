@@ -18,5 +18,8 @@ module "catalyst_center" {
   source  = "netascode/nac-catalystcenter/catalystcenter"
   version = "0.3.0"
 
-  yaml_directories = ["data/"]
+  yaml_directories      = ["data/"]
+  templates_directories = ["data/templates/"]
+
+  use_bulk_api = true
 }

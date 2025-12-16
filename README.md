@@ -1,23 +1,45 @@
-# NAC Catalyst Center Simple Example - Complexity Comparison
+# DEVWKS-1709 Lab
 
-This repository demonstrates three different approaches to configuring Cisco Catalyst Center infrastructure, comparing their complexity, maintainability, and ease of use.
+This is a demonstration repository for **DEVWKS-1709 Lab** and includes four repositories that cover two scenarios and three learning objectives
 
-## 🎯 Purpose
+| Scenario | Repository | Approach | Learning Objective | 
+|----------|--------------|---------|---------|
+| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | Familiarize with Catalyst Center as Code |
+| Simple Example| native-terraform-simple-example | Native Terraform | Comparing approach complexity |
+| Simple Example| native-api-simple-example | Native Catalyst Center API | Comparing approach complexity |
+| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | Demonstrate full SDA Fabric Deployment |
 
-This is a teaching/demonstration repository for **DEVWKS-1709 Lab**, showcasing the difference in complexity between:
-1. **NAC Module (YAML-based)** - Catalyst Center as Code Simplified, declarative configuration
-2. **Native Terraform (HCL)** - Direct provider resource usage
-3. **Native API (Python)** - Direct REST API implementation
+The first three repositories demonstrates three approaches to achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
+This will allows to familiarize with Catalyst Center as Code solution and compare its complexity, maintainability, and ease of use with the other approaches
 
-All three approaches achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
+The forth repository includes comprehensive example that deploys a full SD-Access fabric using the catalyst center as code approach.
+This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Access fabric
 
-## 📊 Quick Comparison
+## Suggested Learning Path
 
-| Approach | Lines of Code | Files | Complexity |
-|----------|--------------|-------|------------|
-| **NAC Module** | ~164 | 3 | ⭐ Simple |
-| **Native Terraform** | ~487 | 1 | ⭐⭐⭐ Complex |
-| **Native API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex |
+### Step 1: Use the Simple Example deployment scenario to familiarize with Catalyst Center as Code
+
+Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
+
+### Step 2 (Optional): Try to achieve the same results using the Terraform Native API approach
+
+Follow the lab guide for the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+
+### Step 3 (Optional): Try to achieve the same results using the Catalyst Center Native API approach
+
+Examine the complexity of the [native API example](native-api-simple-example/README.md) and compare the complexity of the code required to achieve the same result
+
+### Step 4: Review Approach Comparison
+
+Review the [Approach Comparison](APPROACH_COMPARISON.md) to understand the complexity differences between the three approaches used in the Simple Example scenario.
+
+### Step 5 (Stretch): Deploy a complete SD-Access Fabric
+
+Follow the lab guide for the [nac-catalystcenter-comprehensive-example](nac-catalystcenter-comprehensive-example/README.md)
+
+## Lab Access
+
+For instructions on how to access the lab environment, see [Lab Access Guide](LAB_ACCESS.md).
 
 ## 📁 Repository Structure
 
@@ -47,112 +69,9 @@ All three approaches achieve the **identical outcome**: deploying a complete sit
 
 Note that the reference_configs folder is not required for the Catalyst Center as Code solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
-## Lab Access
+## What's Deployed in the Simple Example Scenario
 
-- Use the dCloud eXpo session details to establish a VPN connection to your assigned session <link To Be Added>
-- From your lab workstation, open a RDP (Remote Desktop Protocol) session to the Windows VM
-  - IP: 198.18.133.20
-  - Username: admin
-  - Password: C1sco12345
-
-## Suggested Learning Path
-
-- Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
-- Optionally try to achieve the same results using the [Terraform Native API approach](native-terraform-simple-example/README.md) and compare the complexity of the code required to achieve the same result
-- Optionally Examine the complexity of the [native API example](native-api-simple-example/README.md) to achieve the same results
-
-## 🚀 What's Deployed
-
-Each approach deploys **35 total resources** to Catalyst Center:
-
-### Site Hierarchy (15 resources)
-- **5 Areas**: United States, Golden Hills Campus, Lakefront Tower, Oceanfront Mansion, Desert Oasis Branch
-- **4 Buildings**: Sunset Tower, Windy City Plaza, Art Deco Mansion, Desert Oasis Tower
-- **6 Floors**: Multiple floors across different buildings
-
-### IP Resources (20 resources)
-- **4 Global IP Pools**: US_CORP, US_TECH, US_GUEST, US_BYOD
-- **16 IP Pool Reservations**: 4 reservations per site (CORP, TECH, GUEST, BYOD)
-
-## 📖 Detailed Approach Descriptions
-
-### 1️⃣ NAC Module Approach (`nac-catalystcenter-simple-example/`)
-
-**What it is:** Uses the Network-as-Code (NAC) Terraform module with YAML configuration files.
-
-**Key Features:**
-- ✅ Declarative YAML configuration
-- ✅ Automatic dependency management
-- ✅ Built-in error handling and retries
-- ✅ Pattern-based, intuitive structure
-
-**When to use:**
-- Production deployments at scale
-- Team prefers configuration over code
-- Rapid iteration and changes needed
-- Minimizing human error is critical
-
-**Example:**
-```yaml
-buildings:
-  - name: Sunset Tower
-    latitude: 34.099
-    longitude: -118.366
-    address: 8358 Sunset Blvd, Los Angeles, CA 90069
-    parent_name: Global/United States/Golden Hills Campus
-```
-
-### 2️⃣ Native Terraform Approach (`native-terraform-simple-example/`)
-
-**What it is:** Direct use of CiscoDevNet Catalyst Center provider resources.
-
-**Key Features:**
-- ⚠️ Full control over resources
-- ⚠️ 3x more verbose than NAC
-- ⚠️ Requires 25+ explicit `depends_on` declarations
-- ⚠️ Requires analysis to properly map API objects to TF attribute names
-
-
-**When to use:**
-- Need features not yet in NAC module
-- Small deployments (< 5 sites)
-- Team has deep Terraform/provider expertise
-- Direct provider access required
-
-### 3️⃣ Native API Approach (`native-api-simple-example/`)
-
-**What it is:** Pure Python implementation using REST API calls.
-
-**Key Features:**
-- ❌ 4x more code than NAC
-- ❌ Manual state management
-- ❌ Custom error handling required
-- ❌ Asynchronous task polling
-- ❌ No rollback capability
-- ❌ Manual dependency sequencing
-
-**When to use:**
-- One-time migrations
-- Integration with existing Python workflows
-- Dynamic configuration from external systems
-- Building custom tooling
-- Need to bypass Terraform entirely
-
-⚠️ Requires extensive coding, testing, and debugging
-
-
-## 📋 Key Takeaways
-
-1. **NAC Module reduces complexity by 66-75%** compared to native approaches
-2. **Schema knowledge is critical** for native Terraform (non-obvious attributes, case sensitivity)
-3. **Abstraction layers prevent common mistakes** (gateway conflicts, missing attributes)
-4. **Production deployments benefit from declarative approaches** (state management, rollback)
-
-## 🔗 Resources
-
-- **NAC Module Documentation**: [netascode/terraform-catalystcenter-nac-catalystcenter](https://registry.terraform.io/modules/netascode/nac-catalystcenter/catalystcenter/latest)
-- **Catalyst Center Provider**: [CiscoDevNet/catalystcenter](https://registry.terraform.io/providers/CiscoDevNet/catalystcenter/latest)
-- **Detailed Comparison**: See `nac-catalystcenter-simple-example/COMPARISON.md`
+For details on what infrastructure is deployed in the Simple Example scenario, see [Simple Example Deployment](SIMPLE_EXAMPLE_DEPLOYMENT.md).
 
 ## 🎓 Learning Objectives
 
