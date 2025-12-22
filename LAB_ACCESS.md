@@ -2,6 +2,7 @@
 
 The lab environment includes a Catalyst Center and a Fabric Site.
 You will use the Cisco Secure Client on your laptop to establish a VPN session with the dCloud VPN gateway for your assigned POD.
+
 Once the VPN session is established use the RDP client on your laptop to RDP to the Windows Jump host and execute the steps suggested in the lab guides.
 
 
@@ -21,13 +22,13 @@ Once the VPN session is established use the RDP client on your laptop to RDP to 
 
 Procedure:
 - Follow the eXpo link:  <link To Be Added>
-- Select a Session and click Explore
-- Enter your email address
-- Accept terms and conditions
-- Click continue
-- Select Details tab 
-- Select Cisco Secure Client tab
-- Reveal Cisco Secure Client Credentials
+- Select a **Session** and click **Explore**
+- Enter your **email address**
+- Accept **terms and conditions**
+- Click **continue**
+- Select **Details** tab 
+- Select **Cisco Secure Client** tab
+- Reveal **Cisco Secure Client Credentials**
 
 ![dCloud eXpo Login](images/lab-access/eXpo_login_short_20251217_1018.gif)
 
