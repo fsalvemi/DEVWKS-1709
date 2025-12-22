@@ -8,6 +8,10 @@
 
 ## Access Instructions
 
+### Step 1: Reserve a POD and get VPN access Details
+
+![dCloud eXpo Login](images/lab-access/eXpo_login_short_20251217_1018.gif)
+
 ### Step 1: Connect to VPN
 
 Use the dCloud eXpo session details to establish a VPN connection to your assigned session.
