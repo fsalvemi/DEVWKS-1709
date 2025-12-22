@@ -4,22 +4,22 @@ This is a demonstration repository for **DEVWKS-1709 Lab** and includes four rep
 
 | Scenario | Repository | Approach | Learning Objective | 
 |----------|--------------|---------|---------|
-| Simple Example| nac-catalystcenter-simple-example | Catalyst Center as Code | Familiarize with Catalyst Center as Code |
+| Simple Example| nac-catalystcenter-simple-example | Network as Code for Catalyst Center | Familiarize with Network as Code for Catalyst Center |
 | Simple Example| native-terraform-simple-example | Native Terraform | Comparing approach complexity |
 | Simple Example| native-api-simple-example | Native Catalyst Center API | Comparing approach complexity |
-| Comprehensive Example | nac-catalystcenter-comprehensive-example | Catalyst Center as Code | Demonstrate full SDA Fabric Deployment |
+| Comprehensive Example | nac-catalystcenter-comprehensive-example | Network as Code for Catalyst Center | Demonstrate full SDA Fabric Deployment |
 
 The first three repositories demonstrates three approaches to achieve the **identical outcome**: deploying a complete site hierarchy with IP pools and reservations to Cisco Catalyst Center.
 
-The first example allows to familiarize with the Catalyst Center as Code solution.
+The first example allows to familiarize with the Network as Code for Catalyst Center solution.
 The second and third examples try to achieve the same result using Native Terraform and Native Catalyst Center API. This allows to compare the complexity, maintainability, and ease of use of the three approaches.
 
-The forth repository includes comprehensive example that deploys a full SD-Access fabric using the catalyst center as code approach.
-This demonstrates how Catalyst Center as Code can be used to deploy a full SD-Access fabric
+The forth repository includes comprehensive example that deploys a full SD-Access fabric using the Network as Code for Catalyst Center approach.
+This demonstrates how Network as Code for Catalyst Center can be used to deploy a full SD-Access fabric
 
 ## Suggested Learning Path
 
-### Step 1: Use the Simple Example deployment scenario to familiarize with Catalyst Center as Code
+### Step 1: Use the Simple Example deployment scenario to familiarize with Network as Code for Catalyst Center
 
 Follow the lab guide for the [nac-catalystcenter approach](nac-catalystcenter-simple-example/README.md)
 
@@ -69,7 +69,7 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
     └── native_api_implementation.py       # Python REST API client
 ```
 
-Note that the reference_configs folder is not required for the Catalyst Center as Code solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
+Note that the reference_configs folder is not required for the Network as Code for Catalyst Center solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
 ## What's Deployed in the Simple Example Scenario
 

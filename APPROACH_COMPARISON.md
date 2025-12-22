@@ -6,7 +6,7 @@ This document compares three different approaches to deploying the same infrastr
 
 | Approach | Lines of Code | Files | Complexity |
 |----------|--------------|-------|------------|
-| **Catalyst Center as Code** | ~164 | 3 | ⭐ Simple |
+| **Network as Code for Catalyst Center** | ~164 | 3 | ⭐ Simple |
 | **Native Terraform** | ~487 | 1 | ⭐⭐⭐ Complex |
 | **Native Catalyst Center API** | ~650 | 1 | ⭐⭐⭐⭐ Very Complex |
 
