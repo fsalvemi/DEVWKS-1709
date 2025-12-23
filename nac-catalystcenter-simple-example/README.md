@@ -32,10 +32,19 @@ Deploys a complete network infrastructure to Catalyst Center:
 ```
 nac-catalystcenter-simple-example/
 ├── main.tf                    # Terraform configuration using NAC module
-└── data/
-    ├── sites.nac.yaml        # Site hierarchy (areas, buildings, floors)
-    └── ip_pools.nac.yaml     # IP pools and reservations
+├── data/
+│   ├── sites.nac.yaml        # Site hierarchy (areas, buildings, floors)
+│   └── ip_pools.nac.yaml     # IP pools and reservations
+└── reference_configs/
+    ├── initial_config/        # Base US-only configuration
+    │   ├── sites.nac.yaml     # Initial site hierarchy
+    │   └── ip_pools.nac.yaml  # Initial IP pools
+    └── final_config/          # Complete configuration with Rome
+        ├── sites.nac.yaml     # Final site hierarchy
+        └── ip_pools.nac.yaml  # Final IP pools
 ```
+
+**Note**: The `reference_configs` folder is provided for learning and validation purposes. It contains both the initial configuration (US sites only) and the final configuration (with Rome office added) that you'll work towards during the lab exercises.
 
 ## 🚀 Quick Start
 

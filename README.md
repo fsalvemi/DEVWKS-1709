@@ -47,7 +47,7 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
 
 ```
 .
-├── nac-catalystcenter-simple-example/     # NAC Module approach
+├── nac-catalystcenter-simple-example/     # NAC Module approach - Simple Example
 │   ├── main.tf                            # Terraform configuration
 │   ├── data/
 │   │   ├── sites.nac.yaml                 # Site hierarchy in YAML
@@ -60,6 +60,20 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
 │   │       ├── sites.nac.yaml             # Final site hierarchy
 │   │       └── ip_pools.nac.yaml          # Final IP pools
 │   └── README.md                          # Step-by-step lab guide
+│
+├── nac-catalystcenter-comprehensive-example/ # NAC Module - Comprehensive Example
+│   ├── main.tf                            # Terraform configuration
+│   ├── data/
+│   │   ├── sites.nac.yaml                 # Complete site hierarchy
+│   │   ├── ip_pools.nac.yaml              # IP pools and reservations
+│   │   ├── network_settings.nac.yaml      # Network settings
+│   │   ├── network_profiles.nac.yaml      # Network profiles
+│   │   ├── fabric.nac.yaml                # SD-Access fabric configuration
+│   │   ├── devices.nac.yaml               # Device inventory
+│   │   ├── templates.nac.yaml             # Configuration templates
+│   │   └── templates/
+│   │       └── ACL_Block.j2               # Jinja2 template example
+│   └── README.md                          # Comprehensive deployment guide
 │
 ├── native-terraform-simple-example/       # Native Terraform approach
 │   ├── main.tf                            # All 35 resources in HCL
