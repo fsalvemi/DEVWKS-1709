@@ -83,7 +83,6 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
     └── native_api_implementation.py       # Python REST API client
 ```
 
-Note that the reference_configs folder is not required for the Network as Code for Catalyst Center solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
 ## 🎓 Learning Objectives
 
