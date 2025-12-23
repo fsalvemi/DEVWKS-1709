@@ -494,10 +494,7 @@ terraform destroy  # Remove all 35 resources
 
 ## 📚 Learning Path
 
-1. **Start Here** - Understand YAML structure and NAC module basics
-2. **Compare** - Review `../native-terraform-simple-example/` to see complexity difference
-3. **Explore** - Check `../native-api-simple-example/` for API implementation
-4. **Decide** - Use insights from comparison for your own projects
+**[← Back to Main README](README.md)** to continue your learning
 
 ---
 

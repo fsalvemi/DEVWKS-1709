@@ -210,3 +210,7 @@ Review the full comparison in the repository root:
 ## Conclusion
 
 This folder contains a **fully working implementation** that demonstrates real-world complexity. While it successfully deploys all 35 resources, it required significant debugging and deep schema knowledge. The NAC module approach achieves the same result with 3x less code, automatic dependency management, and worked on the first try.
+
+## 📚 Learning Path
+
+**[← Back to Main README](README.md)** to continue your learning
