@@ -12,12 +12,14 @@ catalyst_center:
         parent_name: Global/United States
       - name: Desert Oasis Branch
         parent_name: Global/United States
+        # NEW: European area hierarchy starting here
       - name: Europe
         parent_name: Global
       - name: Italy
         parent_name: Global/Europe
       - name: Rome
         parent_name: Global/Europe/Italy
+        # NEW: European area hierarchy ending here
     buildings:
       - name: Sunset Tower
         latitude: 34.099
@@ -63,14 +65,18 @@ catalyst_center:
           - DOT_TECH
           - DOT_GUEST
           - DOT_BYOD
+      # NEW: Rome office building starting here
       - name: Rome Office
         latitude: 41.832002
         longitude: 12.491654
         address: Via Del Serafico 200, 00142 Roma Rome, Italy
         country: Italy
         parent_name: Global/Europe/Italy/Rome
+        # NEW: Rome office building ending here
+        # NEW: IP pool reservations for Rome office starting here
         ip_pools_reservations:
           - ROM_CORP
+          # NEW: IP pool reservations for Rome office ending here
     floors:
       - name: FLOOR_1
         floor_number: 1
@@ -90,6 +96,8 @@ catalyst_center:
       - name: FLOOR_1
         floor_number: 1
         parent_name: Global/United States/Desert Oasis Branch/Desert Oasis Tower
+      # NEW: Floor for Rome office building starting here
       - name: FLOOR_1
         floor_number: 1
         parent_name: Global/Europe/Italy/Rome/Rome Office
+      # NEW: Floor for Rome office building ending here
