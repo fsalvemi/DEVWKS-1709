@@ -4,7 +4,7 @@ This folder demonstrates the **Network-as-Code (NAC) Module** approach to config
 
 ## Lab Access
 
-If not already done, follow the [Lab Access Guide](LAB_ACCESS.md)
+If not already done, follow the [Lab Access Guide](../LAB_ACCESS.md)
 
 ## Clone Repository
 
