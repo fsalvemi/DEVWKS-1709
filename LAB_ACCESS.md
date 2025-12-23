@@ -66,7 +66,6 @@ Change directory to the cloned folder
 
 ```bash
 cd DEVWKS-1709
-code .
 ```
 and launch Visual Studio Code
 
