@@ -71,10 +71,6 @@ For instructions on how to access the lab environment, see [Lab Access Guide](LA
 
 Note that the reference_configs folder is not required for the Network as Code for Catalyst Center solution, it has been added to the repository to facilitate the learning and error check for the NAC Catalyst Center Lab.
 
-## What's Deployed in the Simple Example Scenario
-
-For details on what infrastructure is deployed in the Simple Example scenario, see [Simple Example Deployment](SIMPLE_EXAMPLE_DEPLOYMENT.md).
-
 ## 🎓 Learning Objectives
 
 After exploring this repository, you should understand:

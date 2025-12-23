@@ -44,6 +44,32 @@ Once connected to the VPN, open an RDP (Remote Desktop Protocol) session to the 
 - **Username**: admin
 - **Password**: C1sco12345
 
-### Step 4: Start the Lab
+### Step 4: Open Ubuntu terminal from within WSL (Windows Subsystem for Linux).
 
-Once connected to the Windows VM, you can begin working through the lab exercises.
+Search for the Ubuntu app:
+
+![Launch the Ubuntu WSL machine](images/lab-access/Launch%20the%20Ubuntu%20WSL%20machine.png)
+
+Click on **Open** to Launch the Ubuntu WSL machine
+
+### Step 5: Clone the DEVWKS-1709 repository
+
+After opening the Ubuntu terminal, clone the GitHub repository with the lab repos:
+
+```bash
+git clone https://github.com/fsalvemi/DEVWKS-1709.git
+```
+
+### Step 6: Open Visual Studio Code
+
+Change directory to the cloned folder 
+
+```bash
+cd DEVWKS-1709
+code .
+```
+and launch Visual Studio Code
+
+```bash
+code .
+```
