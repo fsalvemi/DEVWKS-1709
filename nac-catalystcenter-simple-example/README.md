@@ -541,8 +541,6 @@ terraform destroy  # Remove all 35 resources
 - This confirms all resources have been successfully destroyed and your environment is back to the clean baseline state
 
 
-
-
 ## ✅ Key Benefits
 
 1. **Simple & Intuitive**: YAML configuration mirrors network hierarchy naturally
@@ -563,7 +561,3 @@ terraform destroy  # Remove all 35 resources
 ## 📚 Learning Path
 
 **[← Back to Main README](README.md)** to continue your learning
-
----
-
-**Part of DEVWKS-1709 Lab** | For complete comparison, see repository root [README.md](../README.md)
