@@ -78,3 +78,6 @@ Thumbs.db
 **/*_override.tf
 **/*_override.tf.json
 **/.terraform.tfstate.lock.info
+
+# Local data folder (for personal testing/development)
+local_data/

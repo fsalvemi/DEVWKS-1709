@@ -4,17 +4,7 @@ This folder demonstrates the **Network-as-Code (NAC) Module** approach to config
 
 ## Lab Access
 
-If not already done, follow the [Lab Access Guide](../LAB_ACCESS.md)
-
-## Clone Repository
-
-- Close Ubuntu WSL and VS Code before starting this lab! This prevents creating nested repository folders within your existing lab directory.
-- Launch a new session of Ubuntu WSL machine.
-- In the terminal window, type the following command to clone the repository
-  ```bash
-  git clone https://github.com/netascode/nac-catalystcenter-simple-example.git
-  ```
-
+If not already done, follow the [Lab Access Guide](../LAB_ACCESS.md) to access the Lab and clone the repositories
 
 ## 🎯 What This Example Does
 
@@ -130,6 +120,20 @@ Files with the `.nac.yaml` suffix leverage the **Network-as-Code Data Model JSON
 - **Documentation**: Built-in schema documentation for all available properties
 
 This schema-based approach catches configuration errors early and guides you with available options as you write your YAML files.
+
+#### 3.2.1 Using IntelliSense
+
+IntelliSense provides intelligent code completion suggestions as you type your YAML configuration. To manually trigger IntelliSense at any point in your file:
+
+- **Windows/Linux**: Press `Ctrl+Space`
+- **Mac**: `Option+Esc` (⌥ + Esc)
+  - **Note**: `Control+Space` might be an alternative but may conflict with macOS system shortcuts for switching input sources or Spotlight. 
+
+If these shortcuts don't work or conflict with other system functions, you can check the current configuration and customize it within Visual Studio Code. To do this, go to Code > Preferences > Keyboard Shortcuts and search for "Trigger Suggest"
+
+![Trigger Suggest Keyboard Shortcuts](../images/simple-example/trigger_suggest_preferences.png)
+
+IntelliSense will display all available properties for the current context, including descriptions and expected data types. For more information on using IntelliSense features, see the [VS Code IntelliSense documentation](https://code.visualstudio.com/docs/editing/intellisense).
 
 ### 3.3 Site Hierarchy (`data/sites.nac.yaml`)
 
@@ -260,7 +264,7 @@ catalyst_center:
       # ... other US areas ...
 ```
 
-**New Code** - Add these three area levels for Europe at the end of the existing list of areas:
+**New Code** - Add these three area levels for Europe at the end of the existing **areas** section:
 ```yaml
 # NEW: European area hierarchy
 - name: Europe
@@ -283,7 +287,7 @@ catalyst_center:
       # ... other US buildings ...
 ```
 
-**New Code** - Add the Rome office at the end of the existing list of buildings:
+**New Code** - Add the Rome office at the end of the existing **buildings** section:
 ```yaml
 # NEW: Rome office building
 - name: Rome Office
