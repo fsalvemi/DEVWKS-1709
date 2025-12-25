@@ -133,7 +133,12 @@ If these shortcuts don't work or conflict with other system functions, you can c
 
 ![Trigger Suggest Keyboard Shortcuts](../images/simple-example/trigger_suggest_preferences.png)
 
-IntelliSense will display all available properties for the current context, including descriptions and expected data types. For more information on using IntelliSense features, see the [VS Code IntelliSense documentation](https://code.visualstudio.com/docs/editing/intellisense).
+IntelliSense will display all available properties for the current context, including descriptions and expected data types. 
+The example below shows how to use intellisense in nac.yaml files
+
+![Using Intellisense in nac.yaml files](../images/simple-example/vscode_intellisense.gif)
+
+For more information on using IntelliSense features, see the [VS Code IntelliSense documentation](https://code.visualstudio.com/docs/editing/intellisense).
 
 ### 3.3 Site Hierarchy (`data/sites.nac.yaml`)
 
