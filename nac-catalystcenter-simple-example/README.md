@@ -219,7 +219,17 @@ catalyst_center:
 
 **Full Documentation:** [Network Settings](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/network/) | [IP Pool Data Model](https://netascode.cisco.com/docs/data_models/catalyst_center/network_settings/ip_pool/)
 
-### 4. Deploy Base Configuration
+### 4. Verify Initial Catalyst Center Configuration
+
+Before deploying any configuration, verify that Catalyst Center has no sites or IP address pools configured:
+
+1. Login to the Catalyst Center GUI using your credentials
+2. Navigate to **Design > Network Hierarchy** to verify no sites exist (only the default "Global" site should be present)
+3. Navigate to **Design > Network Settings > IP Address Pools** to verify no IP pools are configured
+
+This baseline verification ensures you're starting with a clean slate and will help you clearly see the resources created by Terraform in the next step.
+
+### 5. Deploy Base Configuration
 
 Deploy the initial US-based network infrastructure:
 
@@ -244,17 +254,45 @@ terraform apply
 - 4 Global IP Pools (US_CORP, US_TECH, US_GUEST, US_BYOD)
 - 16 IP Pool Reservations (4 per building)
 
+### 6. Verify Catalyst Center Configuration
+
+After the successful Terraform deployment, verify that the sites and IP address pools have been configured correctly in Catalyst Center:
+
+1. **Login to Catalyst Center GUI** using your credentials
+
+2. **Verify Site Hierarchy**:
+   - Navigate to **Design > Network Hierarchy**
+   - Confirm all 5 areas are present:
+     - United States
+     - Golden Hills Campus
+     - Lakefront Tower
+     - Oceanfront Mansion
+     - Desert Oasis Branch
+   - Expand each area to verify the 4 buildings and their 6 floors are correctly created
+
+3. **Verify IP Address Pools**:
+   - Navigate to **Design > Network Settings > IP Address Pools**
+   - Confirm all 4 global IP pools exist:
+     - US_CORP (10.201.0.0/16)
+     - US_TECH (10.202.0.0/16)
+     - US_GUEST (10.203.0.0/16)
+     - US_BYOD (10.204.0.0/16)
+   - Click on each pool to verify the 4 reservations per building (16 total)
+   - Confirm each reservation shows the correct subnet allocation and parent pool
+
+This verification step ensures your Terraform deployment successfully created all the expected resources before proceeding with incremental changes.
+
 ## 🔄 Making Changes
 
-### 5. Adding a New Site
+### 7. Adding a New Site
 
 Now let's expand to Europe by adding a Rome office. This requires editing `data/sites.nac.yaml` to add three types of resources: areas, a building, and a floor.
 
-#### 5.1 Edit `data/sites.nac.yaml`
+#### 7.1 Edit `data/sites.nac.yaml`
 
 This file contains all site hierarchy definitions. We'll add European locations to the existing US structure.
 
-##### 5.1.1 Add Area Hierarchy
+##### 7.1.1 Add Area Hierarchy
 
 **Current Context** - The `areas` section contains US locations:
 ```yaml
@@ -280,7 +318,7 @@ catalyst_center:
   parent_name: Global/Europe/Italy
 ```
 
-##### 5.1.2 Add Building
+##### 7.1.2 Add Building
 
 **Current Context** - The `buildings` section contains US buildings:
 ```yaml
@@ -303,7 +341,7 @@ catalyst_center:
   parent_name: Global/Europe/Italy/Rome
 ```
 
-##### 5.1.3 Add Floor
+##### 7.1.3 Add Floor
 
 **Current Context** - The `floors` section contains US floors:
 ```yaml
@@ -355,15 +393,21 @@ terraform apply
 
 **Expected Result**: ✅ 5 new resources added (3 areas, 1 building, 1 floor)
 
-### 6. Adding IP Pools for New Site
+**Verify in Catalyst Center**: 
+- Refresh your browser page in the Catalyst Center GUI
+- Navigate to **Design > Network Hierarchy** 
+- Expand **Global** to verify the new **Europe > Italy > Rome** hierarchy appears
+- Verify the **Rome Office** building with its floor is visible under the Rome area
+
+### 8. Adding IP Pools for New Site
 
 Now add IP addressing for the Rome office. This requires changes to two files: creating a global IP pool in `ip_pools.nac.yaml` and referencing it in `sites.nac.yaml`.
 
-#### 6.1 Edit `data/ip_pools.nac.yaml`
+#### 7.1 Edit `data/ip_pools.nac.yaml`
 
 This file contains global IP pools and their reservations.
 
-##### 6.1.1 Add European IP Pool
+##### 7.1.1 Add European IP Pool
 
 **Current Context** - The `ip_pools` section contains US pools:
 ```yaml
@@ -396,11 +440,11 @@ catalyst_center:
       subnet: 10.205.1.0
 ```
 
-#### 6.2 Edit `data/sites.nac.yaml`
+#### 7.2 Edit `data/sites.nac.yaml`
 
 Update the Rome Office building to reference the IP pool reservation.
 
-##### 6.2.1 Add IP Pool Reservation to Building
+##### 7.2.1 Add IP Pool Reservation to Building
 
 **Current Context** - The Rome Office building (added in step 5):
 ```yaml
@@ -470,10 +514,17 @@ terraform apply
 
 **Expected Result**: ✅ 2 new resources added (1 global pool, 1 reservation)
 
+**Verify in Catalyst Center**:
+- Refresh your browser page in the Catalyst Center GUI
+- Navigate to **Design > Network Settings > IP Address Pools**
+- Verify the **EU_CORP** pool (10.205.0.0/16) appears in the list
+- Click on **EU_CORP** to view details and confirm the **ROM_CORP** reservation (10.205.1.0/24) is present
+- Navigate to **Design > Network Hierarchy** and check the **Rome Office** building to verify the IP pool reservation is associated
+
 **Total New Resources**: 7 (5 site resources + 2 IP pool resources)
 **Total Lines Added**: ~30 lines across two YAML files
 
-### 7. Clean Up
+### 9. Clean Up
 
 To remove all deployed resources from Catalyst Center:
 
@@ -482,6 +533,14 @@ terraform destroy  # Remove all 35 resources
 ```
 
 **Note**: Terraform will show you a plan of what will be destroyed and ask for confirmation before proceeding.
+
+**Verify in Catalyst Center**:
+- Refresh your browser page in the Catalyst Center GUI
+- Navigate to **Design > Network Hierarchy** to confirm no sites exist (only the default "Global" site should be present)
+- Navigate to **Design > Network Settings > IP Address Pools** to verify no IP pools are configured
+- This confirms all resources have been successfully destroyed and your environment is back to the clean baseline state
+
+
 
 
 ## ✅ Key Benefits
