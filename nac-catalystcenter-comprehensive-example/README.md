@@ -198,11 +198,11 @@ After the successful Terraform deployment, verify that the SD-Access fabric infr
 
    ![Verify IP Transit Exists](../images/comprehensive-example/Verify_IP_Transit_Exists.png)
 
-   - Navigate to **Provision > Inventory** and set focus to **Provision**
+   - Navigate to **Provision > Inventory** 
 
    ![Navigate to Provision Inventory](../images/comprehensive-example/Navigate_to_Provision_Inventory.png)
 
-   - Check that the 3 fabric devices (BR10, EDGE01, EDGE02) 
+   - Set focus to **Provision**. Verify that the 3 fabric devices (BR10, EDGE01, EDGE02) are neither assigned to any site nor provisioned
 
    ![Provision Inventory Focus Provision Devices not assigned](../images/comprehensive-example/Provision_Inventory_Focus_Provision_Devices_not_assigned.png)
 
@@ -210,6 +210,72 @@ After the successful Terraform deployment, verify that the SD-Access fabric infr
 
 This verification step ensures your Terraform deployment successfully created all the expected SD-Access fabric resources.
 
+4. **Provision the Border Device**
+
+To provision border device open devices.nac.yaml file in data/ folder and change state attribute from INIT to PROVISION on BR10.cisco.eu device.
+
+Point your mouse over the INIT word and wait for intellisense to show you the available valid states
+
+![Use Intellisense to visualize valid states](../images/comprehensive-example/Device_BR10_Hover_And_verify_avaialble_states.png)
+
+You can also check the [Device States documentation](https://netascode.cisco.com/docs/data_models/catalyst_center/inventory/device/#device-states) for detailed information about each state and their transitions.
+
+Change the state from `INIT` to `PROVISION` for the BR10 device:
+
+```yaml
+---
+catalyst_center:
+  inventory:
+    devices:
+      - name: BR10
+        fqdn_name: BR10.cisco.eu
+        device_ip: 198.18.130.10
+        pid: C9KV-UADP-8P
+        state: PROVISION  # Changed from INIT to PROVISION
+        device_role: BORDER ROUTER
+        site: Global/Poland/Krakow/Bld A
+        fabric_site: Global/Poland/Krakow
+        fabric_roles:
+          - BORDER_NODE
+          - CONTROL_PLANE_NODE
+```
+
+Save the file and deploy the change:
+
+```bash
+terraform plan
+```
+
+Review the planned changes to verify only the BR10 device state will be updated:
+
+```bash
+terraform apply
+```
+
+Terraform will prompt you to confirm the changes. Review the planned actions and type `yes` to proceed:
+
+```
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+```
+
+Command execution will take around 2 to 3 minutes.
+
+**Expected Result**: ✅ Device state updated - BR10 will be provisioned
+
+**Verify in Catalyst Center**:
+- Refresh your browser page in the Catalyst Center GUI
+- Navigate to **Provision > Inventory** and set focus to **Provision**
+- Verify that BR10 device shows as provisioned
+- Check that the device configuration has been applied
+- Confirm the border router role is correctly assigned
+- Navigate to **Provision > Fabric**, select Krakow fabric
+- Verify **Fabric Infrastructure** show the device added with border and control plane roles
+
+![BR10 Verify Provisioning](../images/comprehensive-example/BR10_verify_provisioning.gif)
 
 
 
