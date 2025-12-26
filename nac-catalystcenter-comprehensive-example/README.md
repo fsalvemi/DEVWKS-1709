@@ -272,10 +272,96 @@ Command execution will take around 2 to 3 minutes.
 - Verify that BR10 device shows as provisioned
 - Check that the device configuration has been applied
 - Confirm the border router role is correctly assigned
-- Navigate to **Provision > Fabric**, select Krakow fabric
-- Verify **Fabric Infrastructure** show the device added with border and control plane roles
+- Navigate to **Provision > Fabric Sites**, select Krakow fabric
+- Verify in the **Fabric Infrastructure** tab that the device has been added with border and control plane roles
 
 ![BR10 Verify Provisioning](../images/comprehensive-example/BR10_verify_provisioning.gif)
+
+5. **Provision the Edge Devices**
+
+To provision the edge devices, open the devices.nac.yaml file in the data/ folder and change the state attribute from INIT to PROVISION on both EDGE01.cisco.eu and EDGE02.cisco.eu devices.
+
+Point your mouse over the INIT word and wait for IntelliSense to show you the available valid states.
+
+You can also check the [Device States documentation](https://netascode.cisco.com/docs/data_models/catalyst_center/inventory/device/#device-states) for detailed information about each state and their transitions.
+
+Change the state from `INIT` to `PROVISION` for both EDGE01 and EDGE02 devices:
+
+```yaml
+---
+catalyst_center:
+  inventory:
+    devices:
+      - name: EDGE01
+        fqdn_name: EDGE01.cisco.eu
+        device_ip: 198.18.130.1
+        pid: C9KV-UADP-8P
+        state: PROVISION  # Changed from INIT to PROVISION
+        device_role: ACCESS
+        site: Global/Poland/Krakow/Bld A
+        fabric_site: Global/Poland/Krakow
+        fabric_roles:
+          - EDGE_NODE
+        port_assignments:
+          - interface_name: GigabitEthernet1/0/2
+            connected_device_type: "USER_DEVICE"
+            data_vlan_name: "192_168_100_0-Campus"
+            authenticate_template_name: "No Authentication"
+      - name: EDGE02
+        fqdn_name: EDGE02.cisco.eu
+        device_ip: 198.18.130.2
+        pid: C9KV-UADP-8P
+        state: PROVISION  # Changed from INIT to PROVISION
+        device_role: ACCESS
+        site: Global/Poland/Krakow/Bld A
+        fabric_site: Global/Poland/Krakow
+        fabric_roles:
+          - EDGE_NODE
+        port_assignments:
+          - interface_name: GigabitEthernet1/0/3
+            connected_device_type: "USER_DEVICE"
+            data_vlan_name: "192_168_100_0-Campus"
+            authenticate_template_name: "No Authentication"
+```
+
+![EDGE01 and EDGE02 Provisioning](../images/comprehensive-example/EDGE01_02_Provisioning.gif)
+
+Save the file and deploy the changes:
+
+```bash
+terraform plan
+```
+
+Review the planned changes to verify only the EDGE01 and EDGE02 device states will be updated:
+
+```bash
+terraform apply
+```
+
+Terraform will prompt you to confirm the changes. Review the planned actions and type `yes` to proceed:
+
+```
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+```
+
+Command execution will take around 4 to 6 minutes (both devices are provisioned in parallel).
+
+**Expected Result**: ✅ Device states updated - EDGE01 and EDGE02 will be provisioned
+
+**Verify in Catalyst Center**:
+- Refresh your browser page in the Catalyst Center GUI
+- Navigate to **Provision > Inventory** and set focus to **Provision**
+- Verify that both EDGE01 and EDGE02 devices show as provisioned
+- Check that the device configurations have been applied
+- Confirm the edge node roles are correctly assigned
+- Navigate to **Provision > Fabric Sites**, select Krakow fabric
+- Verify in the **Fabric Infrastructure** tab that both devices have been added with edge node roles
+
+
 
 
 
